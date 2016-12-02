@@ -10,8 +10,6 @@ drop table if exists instrument;
 
 drop table if exists izvaja;
 
-drop table if exists lokacija;
-
 drop table if exists oglas;
 
 drop table if exists sporocilo;
@@ -21,6 +19,8 @@ drop table if exists uporabnik;
 drop table if exists vloga;
 
 drop table if exists zvrst;
+
+drop table if exists lokacija;
 
 /*==============================================================*/
 /* Table: igra                                                  */
@@ -37,7 +37,7 @@ create table igra
 /*==============================================================*/
 create table instrument
 (
-   id_instrument        int not null,
+   id_instrument        int not null AUTO_INCREMENT,
    in_naziv             varchar(50) not null,
    primary key (id_instrument)
 );
@@ -67,7 +67,7 @@ create table lokacija
 /*==============================================================*/
 create table oglas
 (
-   id_oglas             int not null,
+   id_oglas             int not null AUTO_INCREMENT,
    id_vloga             int not null,
    id_uporabnik         int not null,
    id_zvrst             int not null,
@@ -83,7 +83,7 @@ create table oglas
 /*==============================================================*/
 create table sporocilo
 (
-   id_sporocila         int not null,
+   id_sporocila         int not null AUTO_INCREMENT,
    id_poslje            int not null,
    id_prejme            int not null,
    sp_zadeva            varchar(25) not null,
@@ -97,7 +97,7 @@ create table sporocilo
 /*==============================================================*/
 create table uporabnik
 (
-   id_uporabnik         int not null,
+   id_uporabnik         int not null AUTO_INCREMENT,
    postna_stevilka      int not null,
    id_vloga             int not null,
    up_ime               varchar(30) not null,
@@ -112,7 +112,7 @@ create table uporabnik
 /*==============================================================*/
 create table vloga
 (
-   id_vloga             int not null,
+   id_vloga             int not null AUTO_INCREMENT,
    vl_naziv             varchar(25) not null,
    primary key (id_vloga)
 );
@@ -122,7 +122,7 @@ create table vloga
 /*==============================================================*/
 create table zvrst
 (
-   id_zvrst             int not null,
+   id_zvrst             int not null AUTO_INCREMENT,
    zv_naziv             varchar(50) not null,
    primary key (id_zvrst)
 );
