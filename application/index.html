@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>APLIG - Login</title>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/login.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4" style="text-align: center; margin-top: 50px">
+            <div id="container-login">
+                <div class="panel panel-default">
+                      <h3>Welcome to APLIG!</h3>
+                      <ul class="nav nav-pills nav-justified">
+                        <li class="active"><a data-toggle="pill" href="#login">Sign in</a></li>
+                        <li><a data-toggle="pill" href="#register">Register</a></li>
+                      </ul>
+ 
+                  <div class="panel-body">
+                     <div class="tab-content">
+                          <div id="login" class="tab-pane fade in active">
+                              <form>      
+                                  <input id="email" name="email" type="text" class="form-control" placeholder="E-mail">
+                                  <input id="password" name="password" type="password" class="form-control" placeholder="Password">   
+                                  <div class="checkbox">
+                                      <label><input type="checkbox" value="">Remember me</label>
+                                  </div>  
+                                  <input type="submit" class="btn btn-primary btn-block" value="Sign in">                            
+                              </form>
+                          </div>
+                          <div id="register" class="tab-pane fade in">
+                            <form>      
+                                <input id="email" name="email" type="text" class="form-control" placeholder="E-mail">
+                                <input id="password" name="password" type="password" class="form-control" placeholder="Password">   
+                                <input id="firstName" name="firstName" type="text" class="form-control" placeholder="First name">
+                                <input id="lastName" name="lastName" type="text" class="form-control" placeholder="Last name">
+                                <div class="form-group">
+                                    <select class="form-control" id="location">
+                                        <option disabled selected>Location</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                  </select>
+                                </div>
+                              <input type="submit" class="btn btn-primary btn-block" value="Register">                            
+                          </form>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+             </div>        
+        </div>
+    </div>
+
+
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(function() {
+          $('form').submit(function(){
+              window.location = 'home.html';
+            return false;
+          });
+        });
+    </script>
+
+</body>
+
+</html>
