@@ -45,17 +45,32 @@
                           </div>
                           <div id="register" class="tab-pane fade in">
                             <form>      
+                                <label>Login information</label>
                                 <input id="email" name="email" type="text" class="form-control" placeholder="E-mail">
-                                <input id="password" name="password" type="password" class="form-control" placeholder="Password">   
+                                <input id="password" name="password" type="password" class="form-control" placeholder="Password">  
+                                </br>
+                                <label>Personal information</label>
                                 <input id="firstName" name="firstName" type="text" class="form-control" placeholder="First name">
                                 <input id="lastName" name="lastName" type="text" class="form-control" placeholder="Last name">
                                 <div class="form-group">
                                     <select class="form-control" id="location">
-                                        <option disabled selected>Location</option>
-                                        <option>1</option>
-                                        <option>2</option>
+                                        <option disabled selected></option>
+                                        <option disabled>Location</option>
+                                        <option>loc1</option>
+                                        <option>loc2</option>
                                   </select>
                                 </div>
+                                <label>Musical expertise</label></br><small class="form-text text-muted">Drag or CTRL+click to select multiple.</small>
+                                <div class="form-group">
+                                  <select multiple class="form-control" id="instruments">
+                                    <option>Guitar</option>
+                                    <option>Bass guitar</option>
+                                    <option>Drums</option>
+                                    <option>Vocals</option>
+                                    <option>Banjo</option>
+                                  </select>
+                                </div>
+
                               <input type="submit" class="btn btn-primary btn-block" value="Register">                            
                           </form>
                           </div>
