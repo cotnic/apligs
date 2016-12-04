@@ -8,10 +8,12 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>APLIG</title>
+  <title>APLIGS</title>
 
   <!-- jQuery -->
   <script src="js/jquery.js"></script>
+  <!-- Custom JS -->
+  <script src="js/main.js"></script>
   <!-- Bootstrap Core CSS -->
   <link href="css/bootstrap.css" rel="stylesheet">
   <!-- Custom CSS -->
@@ -29,8 +31,9 @@
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width: 100%;">
             <span class="caret"></span></button>
             <ul class="dropdown-menu">
+              <li class="dropdown-header" id="dropDownUsername"></li>
               <li><a href="#">User settings</a></li>
-              <li><a href="#">Log out</a></li>
+              <li><a href="" class="logoutButton">Log out</a></li>
             </ul>
           </div>
       </div>
@@ -42,7 +45,7 @@
           <li><a href="#newPost">New post</a></li>
           <li><a href="#searcUsers">Search users</a></li>
           <li><a href="#messages">Messages <span class="badge" id="unreadMessagesBadge">0/2</span></a></li>
-          <li><a href="#logout">Log out</a></li>
+          <li><a href="" class="logoutButton">Log out</a></li>
         </ul><br>
       </div>
       <div class="col-sm-6 well content">
@@ -54,6 +57,19 @@
   <!-- Bootstrap Core JavaScript -->
   <script src="js/bootstrap.min.js"></script>
   <script>
+    $( document ).ready(function() {
+      var username=getCookie("username");
+      if (username!="") {
+          $("#dropDownUsername").text(username);
+      } else {
+          window.location = 'index.html';
+      }
+    });
+
+    $(".logoutButton").click(function(){
+        document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+        window.location = 'index.html';
+    });
   </script>
 
 </body>

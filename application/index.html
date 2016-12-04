@@ -9,10 +9,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>APLIG - Login</title>
+    <title>APLIGS - Login</title>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -25,7 +27,7 @@
         <div class="col-sm-4 col-sm-offset-4" style="text-align: center; margin-top: 50px">
             <div id="container-login">
                 <div class="panel panel-default">
-                      <h3>Welcome to APLIG!</h3>
+                      <h3>Welcome to APLIGS!</h3>
                       <ul class="nav nav-pills nav-justified">
                         <li class="active"><a data-toggle="pill" href="#login">Sign in</a></li>
                         <li><a data-toggle="pill" href="#register">Register</a></li>
@@ -34,7 +36,7 @@
                   <div class="panel-body">
                      <div class="tab-content">
                           <div id="login" class="tab-pane fade in active">
-                              <form>      
+                              <form id="loginForm">      
                                   <input id="email" name="email" type="text" class="form-control" placeholder="E-mail">
                                   <input id="password" name="password" type="password" class="form-control" placeholder="Password">   
                                   <div class="checkbox">
@@ -42,26 +44,35 @@
                                   </div>  
                                   <input type="submit" class="btn btn-primary btn-block" value="Sign in">                            
                               </form>
+                              <p id="loginErrorMsg" class="text-danger"></p>
                           </div>
                           <div id="register" class="tab-pane fade in">
-                            <form>      
+                            <form id="registerForm">      
                                 <label>Login information</label>
-                                <input id="email" name="email" type="text" class="form-control" placeholder="E-mail">
-                                <input id="password" name="password" type="password" class="form-control" placeholder="Password">  
+                                <div id="emailFormGroup">
+                                  <input id="email" name="email" type="text" class="form-control" placeholder="E-mail">
+                                </div>
+                                <div id="passwordFormGroup">
+                                  <input id="password" name="password" type="password" class="form-control" placeholder="Password">  
+                                </div>
                                 </br>
                                 <label>Personal information</label>
-                                <input id="firstName" name="firstName" type="text" class="form-control" placeholder="First name">
-                                <input id="lastName" name="lastName" type="text" class="form-control" placeholder="Last name">
-                                <div class="form-group">
+                                <div id="firstNameFormGroup">
+                                  <input id="firstName" name="firstName" type="text" class="form-control" placeholder="First name">
+                                </div>
+                                <div id="lastNameFormGroup">
+                                  <input id="lastName" name="lastName" type="text" class="form-control" placeholder="Last name">
+                                </div>
+                                <div class="form-group" id="locationFormGroup">
                                     <select class="form-control" id="location">
                                         <option disabled selected></option>
-                                        <option disabled>Location</option>
-                                        <option>loc1</option>
-                                        <option>loc2</option>
+                                        <option disabled selected>Location</option>
+                                        <option value="loc1">loc1</option>
+                                        <option value="loc2">loc2</option>
                                   </select>
                                 </div>
                                 <label>Musical expertise</label></br><small class="form-text text-muted">Drag or CTRL+click to select multiple.</small>
-                                <div class="form-group">
+                                <div class="form-group" id="instrumentsFormGroup">
                                   <select multiple class="form-control" id="instruments">
                                     <option>Guitar</option>
                                     <option>Bass guitar</option>
@@ -87,14 +98,81 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script>
-        $(function() {
-          $('form').submit(function(){
-              window.location = 'home.html';
-            return false;
-          });
-        });
-    </script>
+    $("#loginForm").submit(function(event){
+      event.preventDefault();
+      var $form = $( this ),
+        email = $form.find( "input[name='email']" ).val(),
+        password = $form.find( "input[name='password']" ).val();
+      if (email == "test@test.com" && password == "test") {
+        var dateNow = new Date();
+        dateNow.setHours(dateNow.getHours() + 1);
+        document.cookie = "username="+email+";expires="+dateNow
+        document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
+        window.location = 'home.html#mostRecent';
+        $("#loginErrorMsg").text("");
+        return false;        
+      }else{
+        $("#loginErrorMsg").text("Invalid username or password");
+      }
+    });
 
+    $("#registerForm").submit(function(event){
+      event.preventDefault();
+      var $form = $( this ),
+        email = $form.find( "input[name='email']" ).val(),
+        password = $form.find( "input[name='password']" ).val(),
+        firstName = $form.find( "input[name='firstName']" ).val(),
+        lastName = $form.find( "input[name='lastName']" ).val(),
+        loc = $form.find( "select[id='location']" ).find(":selected").val(),
+        instruments = $form.find("select[id='instruments'] option:selected").map(function(){ return this.value }).get().join(", ");
+
+      var error = false;
+      if (password.length < 6) {
+        $("#passwordFormGroup").addClass("has-error");
+        error=true;
+      }else{
+        $("#passwordFormGroup").removeClass("has-error");
+      }
+      if (email.length < 5) {
+        $("#emailFormGroup").addClass("has-error");
+        error=true;
+      }else{
+        $("#emailFormGroup").removeClass("has-error");
+      }
+      if (firstName.length == 0) {
+        $("#firstNameFormGroup").addClass("has-error");
+        error=true;
+      }else{
+        $("#firstNameFormGroup").removeClass("has-error");
+      }
+      if (lastName.length == 0) {
+        $("#lastNameFormGroup").addClass("has-error");
+        error=true;
+      }else{
+        $("#lastNameFormGroup").removeClass("has-error");
+      }
+      if (location.length == 0) {
+        $("#locationFormGroup").addClass("has-error");
+        error=true;
+      }else{
+        $("#locationFormGroup").removeClass("has-error");
+      }
+      if (instruments.length == 0) {
+        $("#instrumentsFormGroup").addClass("has-error");
+        error=true;
+      }else{
+        $("#instrumentsFormGroup").removeClass("has-error");
+      }
+      if (!error) {
+        var dateNow = new Date();
+        dateNow.setHours(dateNow.getHours() + 1);
+        document.cookie = "username="+email+";expires="+dateNow;
+        document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
+        window.location = 'home.html#mostRecent';        
+      }
+    });
+
+    </script>
 </body>
 
 </html>
