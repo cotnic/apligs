@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="apligs-jpa">
+		<class>com.cotnic.apligs.entities.Instrument</class>
+		<class>com.cotnic.apligs.entities.Lokacija</class>
+		<class>com.cotnic.apligs.entities.Oglas</class>
+		<class>com.cotnic.apligs.entities.Sporocilo</class>
+		<class>com.cotnic.apligs.entities.Uporabnik</class>
+		<class>com.cotnic.apligs.entities.Vloga</class>
+		<class>com.cotnic.apligs.entities.Zvrst</class>
+		
+		
+		<properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/apligs" />
+            <property name="javax.persistence.jdbc.user" value="tpouser" />
+            <property name="javax.persistence.jdbc.password" value="tporoot" />
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+        </properties>
+	</persistence-unit>
+</persistence>

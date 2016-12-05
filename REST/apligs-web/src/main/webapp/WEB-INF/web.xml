@@ -19,4 +19,14 @@
     <servlet-name>FirstServlet</servlet-name>
     <url-pattern>/FirstServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>JPAServlet</display-name>
+    <servlet-name>JPAServlet</servlet-name>
+    <servlet-class>com.cotnic.apligs.servlet.JPAServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JPAServlet</servlet-name>
+    <url-pattern>/JPAServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

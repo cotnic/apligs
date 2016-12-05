@@ -49,5 +49,6 @@
 	<modules>
 		<module>apligs-web</module>
 		<module>apligs-ear</module>
+		<module>apligs-jpa</module>
 	</modules>
 </project>

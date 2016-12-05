@@ -10,11 +10,17 @@
 	<packaging>ear</packaging>
 	<dependencies>
 		<!-- Dependencies for other libraries -->
-		<!-- Dependency for created modules -->
+		<!-- Dependency for module WEB -->
 		<dependency>
 			<groupId>com.cotnic.apligs</groupId>
 			<artifactId>apligs-web</artifactId>
 			<type>war</type>
+		</dependency>
+		<!-- Dependency for module JPA -->
+		<dependency>
+			<groupId>com.cotnic.apligs</groupId>
+			<artifactId>apligs-jpa</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
