@@ -73,12 +73,25 @@
                                 </div>
                                 <label>Musical expertise</label></br><small class="form-text text-muted">Drag or CTRL+click to select multiple.</small>
                                 <div class="form-group" id="instrumentsFormGroup">
-                                  <select multiple class="form-control" id="instruments">
+                                  <select class="form-control" id="instruments">
+                                    <option disabled selected></option>
+                                    <option disabled selected>Instrument</option>
                                     <option>Guitar</option>
                                     <option>Bass guitar</option>
                                     <option>Drums</option>
                                     <option>Vocals</option>
                                     <option>Banjo</option>
+                                  </select>
+                                </div>
+                                <div class="form-group" id="genreFormGroup">
+                                  <select class="form-control" id="genre">
+                                    <option disabled selected></option>
+                                    <option disabled selected>Genre</option>
+                                    <option>Rock/metal</option>
+                                    <option>Country</option>
+                                    <option>Pop</option>
+                                    <option>Rap</option>
+                                    <option>Jazz</option>
                                   </select>
                                 </div>
 
@@ -108,7 +121,7 @@
         dateNow.setHours(dateNow.getHours() + 1);
         document.cookie = "username="+email+";expires="+dateNow
         document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
-        window.location = 'home.html#mostRecent';
+        window.location = 'home.html';
         $("#loginErrorMsg").text("");
         return false;        
       }else{
@@ -168,7 +181,7 @@
         dateNow.setHours(dateNow.getHours() + 1);
         document.cookie = "username="+email+";expires="+dateNow;
         document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
-        window.location = 'home.html#mostRecent';        
+        window.location = 'home.html';        
       }
     });
 

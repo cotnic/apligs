@@ -9,12 +9,21 @@ body{
 html, body, .container-fluid, .row {
 	height: 100%; 
 }
-
+/*******SIDENAV*******/
 .sidenav{
 	height: 100%;
 }
-
+/*******CONTENT*****/
 .content{
 	margin-left: 20px;
 	height: 100%;
+}
+/******ENTRY****/
+.table{
+	margin-bottom: 5px;
+}
+
+.entry:hover{
+	background-color: #eaeaea;
+	cursor: pointer;
 }
