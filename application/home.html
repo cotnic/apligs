@@ -25,6 +25,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-2 col-sm-offset-1 well" id="sidebarWrapper">
+      <!-- USER -->
       <div class="well">
          <img src="assets/usr1.jpg" class="img-responsive" alt="Random Name">  
          <div class="dropdown">
@@ -37,19 +38,112 @@
             </ul>
           </div>
       </div>
-       
+       <!-- NAVIGATION -->
         <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a href="#mostRecent">Most recent posts</a></li>
-          <li><a href="#bandLooks">Band looking for...</a></li>
-          <li><a href="#musicianLooks">Musician looking for...</a></li>
-          <li><a href="#newPost">New post</a></li>
-          <li><a href="#searcUsers">Search users</a></li>
-          <li><a href="#messages">Messages <span class="badge" id="unreadMessagesBadge">0/2</span></a></li>
-          <li><a href="" class="logoutButton">Log out</a></li>
+          <li class="active"><a data-toggle="pill" href="#contentMostRecent">Most recent posts</a></li>
+          <li><a data-toggle="pill" href="#contentBandLooks">Band looking for...</a></li>
+          <li><a data-toggle="pill" href="#contentMusicianLooks">Musician looking for...</a></li>
+          <li><a href="#" id="newPostB">New post</a></li>
+          <li><a href="#" id="searchUsersB">Search users</a></li>
+          <li><a href="#" id="messagesB">Messages <span class="badge" id="unreadMessagesBadge">0/2</span></a></li>
+          <li><a href="#" class="logoutButton">Log out</a></li>
         </ul><br>
       </div>
-      <div class="col-sm-6 well content">
-        Main
+      <div class="col-sm-6 well content tab-content">
+      <!-- MOST RECENT POSTS -->
+          <div id="contentMostRecent" class="tab-pane active fade in"  data-toggle="collapse" data-target="#contentPostDetails">
+            <div class="entry well">
+              <div id="entryTitle"><strong><big>Rock band looking for guitarist</big></strong></div>
+              <table class="table entryTable">
+                <tbody>
+                  <tr>
+                    <td class="entryType">Band looking for...</td>
+                    <td class="entryInstrument">Guitarist</td>
+                    <td class="entryGenre">Rock</td>
+                    <td class="entryDate">6.11.2016</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="text-muted entryTextShort">Experienced band from somewhere looking for a skilled guitarist with ability of being quiet.</p>
+            </div>
+            <div class="entry well">     
+              <div id="entryTitle"><strong><big>Pop group looking for singer</big></strong></div>
+              <table class="table entryTable">
+                <tbody>
+                  <tr>
+                    <td class="entryType">Band looking for...</td>
+                    <td class="entryInstrument">Singer</td>
+                    <td class="entryGenre">Pop</td>
+                    <td class="entryDate">3.11.2016</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="text-muted entryTextShort">Looking for a good female or male singer in early 20s.</p>   
+            </div>
+            <div class="entry well">     
+              <div id="entryTitle"><strong><big>Drummer looking for rock band</big></strong></div>
+              <table class="table entryTable">
+                <tbody>
+                  <tr>
+                    <td class="entryType">Musician looking for...</td>
+                    <td class="entryInstrument">Drummer</td>
+                    <td class="entryGenre">Rock</td>
+                    <td class="entryDate">2.11.2016</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="text-muted entryTextShort">Hi. I'm looking for a good rock/metal band.</p>   
+            </div>
+        </div>
+        <!-- BAND LOOKING FOR -->
+        <div id="contentBandLooks" class="contentPart tab-pane fade">
+            <div class="entry well">
+              <div id="entryTitle"><strong><big>Rock band looking for guitarist</big></strong></div>
+              <table class="table entryTable">
+                <tbody>
+                  <tr>
+                    <td class="entryType">Band looking for...</td>
+                    <td class="entryInstrument">Guitarist</td>
+                    <td class="entryGenre">Rock</td>
+                    <td class="entryDate">6.11.2016</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="text-muted entryTextShort">Experienced band from somewhere looking for a skilled guitarist with ability of being quiet.</p>
+            </div>
+            <div class="entry well">     
+              <div id="entryTitle"><strong><big>Pop group looking for singer</big></strong></div>
+              <table class="table entryTable">
+                <tbody>
+                  <tr>
+                    <td class="entryType">Band looking for...</td>
+                    <td class="entryInstrument">Singer</td>
+                    <td class="entryGenre">Pop</td>
+                    <td class="entryDate">3.11.2016</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="text-muted entryTextShort">Looking for a good female or male singer in early 20s.</p>   
+            </div>
+        </div>
+        <!-- MUSICIAN LOOKING FOR -->
+        <div id="contentMusicianLooks" class="contentPart tab-pane fade">
+          <div class="entry well">     
+            <div id="entryTitle"><strong><big>Drummer looking for rock band</big></strong></div>
+            <table class="table entryTable">
+              <tbody>
+                <tr>
+                  <td class="entryType">Musician looking for...</td>
+                  <td class="entryInstrument">Drummer</td>
+                  <td class="entryGenre">Rock</td>
+                  <td class="entryDate">2.11.2016</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="text-muted entryTextShort">Hi. I'm looking for a good rock/metal band.</p>   
+          </div>        
+        </div>
+        <!-- POST DETAILS -->
       </div>
     </div>
   </div>
@@ -64,12 +158,21 @@
       } else {
           window.location = 'index.html';
       }
-    });
-
+  
+    /*LOGOUT BUTTON*/
     $(".logoutButton").click(function(){
         document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
         window.location = 'index.html';
     });
+    
+
+  });   /* $(window).scroll(function () {
+    if ($(window).scrollTop() + $(window).height() >= 
+    $('.content').offset().top + $('.content').height() ) { 
+    $('.content').height($('.content').height()+100);
+  alert("povečava");
+    }    
+  });*/
   </script>
 
 </body>
