@@ -21,9 +21,10 @@ html, body, .container-fluid, .row {
 /******ENTRY****/
 .table{
 	margin-bottom: 5px;
+	font-size: 13px;
 }
-
-.entry:hover{
-	background-color: #eaeaea;
+.panel-heading:hover{
+		background-color: #eaeaea;
 	cursor: pointer;
 }
+

@@ -43,7 +43,7 @@
           <li class="active"><a data-toggle="pill" href="#contentMostRecent">Most recent posts</a></li>
           <li><a data-toggle="pill" href="#contentBandLooks">Band looking for...</a></li>
           <li><a data-toggle="pill" href="#contentMusicianLooks">Musician looking for...</a></li>
-          <li><a href="#" id="newPostB">New post</a></li>
+          <li><a data-toggle="pill" href="#newPost">New post</a></li>
           <li><a href="#" id="searchUsersB">Search users</a></li>
           <li><a href="#" id="messagesB">Messages <span class="badge" id="unreadMessagesBadge">0/2</span></a></li>
           <li><a href="#" class="logoutButton">Log out</a></li>
@@ -51,99 +51,270 @@
       </div>
       <div class="col-sm-6 well content tab-content">
       <!-- MOST RECENT POSTS -->
-          <div id="contentMostRecent" class="tab-pane active fade in"  data-toggle="collapse" data-target="#contentPostDetails">
-            <div class="entry well">
-              <div id="entryTitle"><strong><big>Rock band looking for guitarist</big></strong></div>
-              <table class="table entryTable">
-                <tbody>
-                  <tr>
-                    <td class="entryType">Band looking for...</td>
-                    <td class="entryInstrument">Guitarist</td>
-                    <td class="entryGenre">Rock</td>
-                    <td class="entryDate">6.11.2016</td>
-                  </tr>
-                </tbody>
-              </table>
-              <p class="text-muted entryTextShort">Experienced band from somewhere looking for a skilled guitarist with ability of being quiet.</p>
+        <div id="contentMostRecent" class="tab-pane active fade in"  data-toggle="collapse" data-target="#contentPostDetails">
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default entry">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                    <div id="entryTitle">Rock band looking for guitarist</div>
+                    <br>
+                    <table class="table entryTable">
+                      <tbody>
+                        <tr>
+                          <td class="entryType">Band looking for...</td>
+                          <td class="entryInstrument">Singer</td>
+                          <td class="entryGenre">Pop</td>
+                          <td class="entryDate">3.11.2016</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </h4>
+              </div>
+              <div id="collapse1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  <p class="entryText">Experienced band from somewhere looking for a skilled guitarist with ability of being quiet..</p>
+                  <button type="button" class="btn btn-primary">Contact user</button>
+                </div>
+              </div>
             </div>
-            <div class="entry well">     
-              <div id="entryTitle"><strong><big>Pop group looking for singer</big></strong></div>
-              <table class="table entryTable">
-                <tbody>
-                  <tr>
-                    <td class="entryType">Band looking for...</td>
-                    <td class="entryInstrument">Singer</td>
-                    <td class="entryGenre">Pop</td>
-                    <td class="entryDate">3.11.2016</td>
-                  </tr>
-                </tbody>
-              </table>
-              <p class="text-muted entryTextShort">Looking for a good female or male singer in early 20s.</p>   
+            <div class="panel panel-default entry">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                    <div id="entryTitle">Pop group looking for singer</div>
+                    <br>
+                    <table class="table entryTable">
+                      <tbody>
+                        <tr>
+                          <td class="entryType">Band looking for...</td>
+                          <td class="entryInstrument">Singer</td>
+                          <td class="entryGenre">Pop</td>
+                          <td class="entryDate">3.11.2016</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </h4>
+              </div>
+              <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p class="entryText">Looking for a good female or male singer in early 20s.</p>
+                  <button type="button" class="btn btn-primary">Contact user</button>
+                </div>
+              </div>
             </div>
-            <div class="entry well">     
-              <div id="entryTitle"><strong><big>Drummer looking for rock band</big></strong></div>
-              <table class="table entryTable">
-                <tbody>
-                  <tr>
-                    <td class="entryType">Musician looking for...</td>
-                    <td class="entryInstrument">Drummer</td>
-                    <td class="entryGenre">Rock</td>
-                    <td class="entryDate">2.11.2016</td>
-                  </tr>
-                </tbody>
-              </table>
-              <p class="text-muted entryTextShort">Hi. I'm looking for a good rock/metal band.</p>   
+            <div class="panel panel-default entry">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                    <div id="entryTitle">Drummer looking for rock band</div>
+                    <br>
+                    <table class="table entryTable">
+                      <tbody>
+                        <tr>
+                          <td class="entryType">Musician looking for...</td>
+                          <td class="entryInstrument">Drummer</td>
+                          <td class="entryGenre">Rock</td>
+                          <td class="entryDate">2.11.2016</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </h4>
+              </div>
+              <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p class="entryText">Hi. I'm looking for a good rock/metal band.</p>
+                  <button type="button" class="btn btn-primary">Contact user</button>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+              
         <!-- BAND LOOKING FOR -->
         <div id="contentBandLooks" class="contentPart tab-pane fade">
-            <div class="entry well">
-              <div id="entryTitle"><strong><big>Rock band looking for guitarist</big></strong></div>
-              <table class="table entryTable">
-                <tbody>
-                  <tr>
-                    <td class="entryType">Band looking for...</td>
-                    <td class="entryInstrument">Guitarist</td>
-                    <td class="entryGenre">Rock</td>
-                    <td class="entryDate">6.11.2016</td>
-                  </tr>
-                </tbody>
-              </table>
-              <p class="text-muted entryTextShort">Experienced band from somewhere looking for a skilled guitarist with ability of being quiet.</p>
+          <div class="panel-group" id="accordion1">
+            <div class="panel panel-default entry">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div data-toggle="collapse" data-parent="#accordion1" href="#collapse5">
+                    <div id="entryTitle">Rock band looking for guitarist</div>
+                    <br>
+                    <table class="table entryTable">
+                      <tbody>
+                        <tr>
+                          <td class="entryType">Band looking for...</td>
+                          <td class="entryInstrument">Singer</td>
+                          <td class="entryGenre">Pop</td>
+                          <td class="entryDate">3.11.2016</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </h4>
+              </div>
+              <div id="collapse5" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  <p class="entryText">Experienced band from somewhere looking for a skilled guitarist with ability of being quiet..</p>
+                  <button type="button" class="btn btn-primary">Contact user</button>
+                </div>
+              </div>
             </div>
-            <div class="entry well">     
-              <div id="entryTitle"><strong><big>Pop group looking for singer</big></strong></div>
-              <table class="table entryTable">
-                <tbody>
-                  <tr>
-                    <td class="entryType">Band looking for...</td>
-                    <td class="entryInstrument">Singer</td>
-                    <td class="entryGenre">Pop</td>
-                    <td class="entryDate">3.11.2016</td>
-                  </tr>
-                </tbody>
-              </table>
-              <p class="text-muted entryTextShort">Looking for a good female or male singer in early 20s.</p>   
+            <div class="panel panel-default entry">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div data-toggle="collapse" data-parent="#accordion1" href="#collapse6">
+                    <div id="entryTitle">Pop group looking for singer</div>
+                    <br>
+                    <table class="table entryTable">
+                      <tbody>
+                        <tr>
+                          <td class="entryType">Band looking for...</td>
+                          <td class="entryInstrument">Singer</td>
+                          <td class="entryGenre">Pop</td>
+                          <td class="entryDate">3.11.2016</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </h4>
+              </div>
+              <div id="collapse6" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p class="entryText">Looking for a good female or male singer in early 20s.</p>
+                  <button type="button" class="btn btn-primary">Contact user</button>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
         <!-- MUSICIAN LOOKING FOR -->
         <div id="contentMusicianLooks" class="contentPart tab-pane fade">
-          <div class="entry well">     
-            <div id="entryTitle"><strong><big>Drummer looking for rock band</big></strong></div>
-            <table class="table entryTable">
-              <tbody>
-                <tr>
-                  <td class="entryType">Musician looking for...</td>
-                  <td class="entryInstrument">Drummer</td>
-                  <td class="entryGenre">Rock</td>
-                  <td class="entryDate">2.11.2016</td>
-                </tr>
-              </tbody>
-            </table>
-            <p class="text-muted entryTextShort">Hi. I'm looking for a good rock/metal band.</p>   
-          </div>        
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default entry">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <div data-toggle="collapse" data-parent="#accordion" href="#collapse7">
+                    <div id="entryTitle">Drummer looking for rock band</div>
+                    <br>
+                    <table class="table entryTable">
+                      <tbody>
+                        <tr>
+                          <td class="entryType">Musician looking for...</td>
+                          <td class="entryInstrument">Drummer</td>
+                          <td class="entryGenre">Rock</td>
+                          <td class="entryDate">2.11.2016</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </h4>
+              </div>
+              <div id="collapse7" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <p class="entryText">Hi. I'm looking for a good rock/metal band.</p>
+                  <button type="button" class="btn btn-primary">Contact user</button>
+                </div>
+              </div>
+            </div> 
+          </div>     
         </div>
-        <!-- POST DETAILS -->
+        <!-- NEW POST -->
+
+        <div id="newPost" class="contentPart tab-pane fade">
+          <ul class="nav nav-pills nav-justified">
+            <li class="active"><a data-toggle="pill" href="#newPostBandLooks">Band looking for...</a></li>
+            <li><a data-toggle="pill" href="#newPostMusicianlooks">Musician looking for...</a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="newPostBandLooks" class="tab-pane fade in active">
+            <br>
+            <form>
+              <div class="form-group" id="instrumentsFormGroup">
+                <select class="form-control" id="instruments">
+                  <option disabled selected></option>
+                  <option disabled selected>The instrument you are look for</option>
+                  <option>Guitar</option>
+                  <option>Bass guitar</option>
+                  <option>Drums</option>
+                  <option>Vocals</option>
+                  <option>Banjo</option>
+                </select>
+              </div>
+              <div class="form-group" id="genreFormGroup">
+                <select class="form-control" id="genre">
+                  <option disabled selected></option>
+                  <option disabled selected>Your genre</option>
+                  <option>Rock/metal</option>
+                  <option>Country</option>
+                  <option>Pop</option>
+                  <option>Rap</option>
+                  <option>Jazz</option>
+                </select>
+              </div>
+              <div class="form-group" id="locationFormGroup">
+                  <select class="form-control" id="location">
+                      <option disabled selected></option>
+                      <option disabled selected>Location of your band</option>
+                      <option value="loc1">loc1</option>
+                      <option value="loc2">loc2</option>
+                </select>
+              </div>
+              <div id="titleFormGroup">
+                <input id="postTitle" name="postTitle" type="text" class="form-control" placeholder="Post title">
+              </div>
+              <br>
+              <div class="form-group">
+                <textarea class="form-control" rows="5" id="postDetails" name="postDetails" placeholder="Post details"></textarea>
+              </div>
+              <input type="submit" class="btn btn-primary btn-block" value="Publish">  
+            </form>
+            </div>
+            <div id="newPostMusicianlooks" class="tab-pane fade">
+              <br>
+              <div class="form-group" id="instrumentsFormGroup">
+                <select class="form-control" id="instruments">
+                  <option disabled selected></option>
+                  <option disabled selected>The instrument you offer</option>
+                  <option>Guitar</option>
+                  <option>Bass guitar</option>
+                  <option>Drums</option>
+                  <option>Vocals</option>
+                  <option>Banjo</option>
+                </select>
+              </div>
+              <div class="form-group" id="genreFormGroup">
+                <select class="form-control" id="genre">
+                  <option disabled selected></option>
+                  <option disabled selected>Your preffered genre</option>
+                  <option>Rock/metal</option>
+                  <option>Country</option>
+                  <option>Pop</option>
+                  <option>Rap</option>
+                  <option>Jazz</option>
+                </select>
+              </div>
+              <div class="form-group" id="locationFormGroup">
+                  <select class="form-control" id="location">
+                      <option disabled selected></option>
+                      <option disabled selected>Your location</option>
+                      <option value="loc1">loc1</option>
+                      <option value="loc2">loc2</option>
+                </select>
+              </div>
+              <div id="titleFormGroup">
+                <input id="postTitle" name="postTitle" type="text" class="form-control" placeholder="Post title">
+              </div>
+              <br>
+              <div class="form-group">
+                <textarea class="form-control" rows="5" id="postDetails" name="postDetails" placeholder="Post details"></textarea>
+              </div>
+              <input type="submit" class="btn btn-primary btn-block" value="Publish">  
+            </div>
+          </div>
       </div>
     </div>
   </div>
