@@ -5,18 +5,23 @@ import java.util.List;
 import javax.ejb.Local;
 
 import si.fri.tpo.model.Sporocilo;
+import si.fri.tpo.model.Uporabnik;
 
 @Local
 public interface UpravljalecSporocilSBLocal {
-	List<Sporocilo> vrniVseOglase();
+	List<Sporocilo> vrniVsaSporocila();
 
-	void shraniUporabnika(Sporocilo sporocilo);
+	void shraniSporocilo(Sporocilo sporocilo);
+	
+	List<Sporocilo> vrniPrejeto(int id);
+	
+	List<Sporocilo> vrniPoslano(int id);
 
-	Sporocilo vrniUporabnika(int id);
+	Sporocilo vrniSporocilo(int id);
 
-	void posodobiUporabnika(Sporocilo sporocilo);
+	void posodobiSporocilo(Sporocilo sporocilo);
 
-	void zbrisiUporabnika(int id);
+	void zbrisiSporocilo(int id);
 
-	List<Sporocilo> vrniVseUporabnike(int offset, int limit);
+	List<Sporocilo> vrniVsaSporocila(int offset, int limit);
 }

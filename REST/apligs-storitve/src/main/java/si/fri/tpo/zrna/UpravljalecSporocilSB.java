@@ -2,14 +2,17 @@ package si.fri.tpo.zrna;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import si.fri.prpo.zrna.vmesniki.UpravljalecSporocilSBLocal;
 import si.fri.prpo.zrna.vmesniki.UpravljalecSporocilSBRemote;
+import si.fri.prpo.zrna.vmesniki.UpravljalecUporabnikovSBLocal;
 import si.fri.tpo.model.Ogla;
 import si.fri.tpo.model.Sporocilo;
+import si.fri.tpo.model.Uporabnik;
 
 /**
  * Session Bean implementation class UpravljalecSporocilSB
@@ -19,34 +22,49 @@ public class UpravljalecSporocilSB implements UpravljalecSporocilSBRemote, Uprav
 	@PersistenceContext(unitName="apligs-jpa")
 	private EntityManager em;
 
+	@EJB
+	UpravljalecUporabnikovSBLocal upravljalecUporabnikov;
+	
 	@Override
-	public List<Sporocilo> vrniVseOglase() {
+	public List<Sporocilo> vrniVsaSporocila() {
 		return em.createNamedQuery("Sporocilo.findAll").getResultList();
+	}
+	
+	@Override
+	public List<Sporocilo> vrniPrejeto(int id) {
+		Uporabnik uporabnik = upravljalecUporabnikov.vrniUporabnika(id);
+		return em.createNamedQuery("Sporocilo.findPrejeto").setParameter("uporabnik", uporabnik).getResultList();
+	}
+	
+	@Override
+	public List<Sporocilo> vrniPoslano(int id) {
+		Uporabnik uporabnik = upravljalecUporabnikov.vrniUporabnika(id);
+		return em.createNamedQuery("Sporocilo.findPoslano").setParameter("uporabnik", uporabnik).getResultList();
 	}
 
 	@Override
-	public void shraniUporabnika(Sporocilo sporocilo) {
+	public void shraniSporocilo(Sporocilo sporocilo) {
 		em.persist(sporocilo);
 	}
 
 	@Override
-	public Sporocilo vrniUporabnika(int id) {
+	public Sporocilo vrniSporocilo(int id) {
 		return (Sporocilo)em.createNamedQuery("Sporocilo.findId").setParameter("id", id).getSingleResult();
 	}
 
 	@Override
-	public void posodobiUporabnika(Sporocilo sporocilo) {
+	public void posodobiSporocilo(Sporocilo sporocilo) {
 		// TODO Implement em.merge
 		
 	}
 
 	@Override
-	public void zbrisiUporabnika(int id) {
+	public void zbrisiSporocilo(int id) {
 		em.createNamedQuery("Sporocilo.deleteId").setParameter("id", id).getSingleResult();
 	}
 
 	@Override
-	public List<Sporocilo> vrniVseUporabnike(int offset, int limit) {
+	public List<Sporocilo> vrniVsaSporocila(int offset, int limit) {
 		return em.createNamedQuery("Sporocilo.findAll").setFirstResult(offset).setMaxResults(limit).getResultList();
 	}
 

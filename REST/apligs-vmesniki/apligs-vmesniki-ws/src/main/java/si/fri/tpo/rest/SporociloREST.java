@@ -3,6 +3,7 @@ package si.fri.tpo.rest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
+import si.fri.tpo.model.Sporocilo;
 import si.fri.tpo.model.Uporabnik;
 
 @Path("/sporocila")
@@ -16,15 +17,23 @@ public interface SporociloREST {
 	
 	@GET
 	@Path("/{id}")
+	public Response vrniPoslano(@PathParam("id") int id);
+	
+	@GET
+	@Path("/{id}")
+	public Response vrniPrejeto(@PathParam("id") int id);
+	
+	@GET
+	@Path("/{id}")
 	public Response vrniSporocilo(@PathParam("id") int id);
 	
 	@POST
 	@Path("/")
-	public Response dodajSporocilo(Uporabnik uporabnik);
+	public Response dodajSporocilo(Sporocilo sporocilo);
 	
 	@PUT
 	@Path("/")
-	public Response urediSporocilo(Uporabnik uporabnik);
+	public Response urediSporocilo(Sporocilo sporocilo);
 	
 	@DELETE
 	@Path("/{id}")

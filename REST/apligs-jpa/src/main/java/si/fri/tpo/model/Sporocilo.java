@@ -16,6 +16,8 @@ import java.util.Date;
 @NamedQueries({
 	@NamedQuery(name="Sporocilo.findAll", query="SELECT s FROM Sporocilo s"),
 	@NamedQuery(name="Sporocilo.findId", query="SELECT s FROM Sporocilo s WHERE s.idSporocila = :id"),
+	@NamedQuery(name="Sporocilo.findPrejeto", query="SELECT s FROM Sporocilo s WHERE s.uporabnik1 = :uporabnik"),
+	@NamedQuery(name="Sporocilo.findPoslano", query="SELECT s FROM Sporocilo s WHERE s.uporabnik2 = :uporabnik"),
 	@NamedQuery(name="Sporocilo.deleteAll", query="DELETE FROM Sporocilo"),
 	@NamedQuery(name="Sporocilo.deleteId", query="DELETE FROM Sporocilo s WHERE s.idSporocila = :id")
 })

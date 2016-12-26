@@ -43,7 +43,7 @@ public class TestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<Sporocilo> sporocila = sporociloSB.vrniVseOglase();
+		List<Sporocilo> sporocila = sporociloSB.vrniVsaSporocila();
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println("<html>");

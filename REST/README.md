@@ -8,7 +8,10 @@ Get all instruments played by userID ->
 Get all genres from a user by ID -> 
 
 
-Get all message sent by user ID -> 
+Get all message sent by user ID -> http://localhost:8080/apligs-rest/v1/sporocila/poslano/1
+Get all messages received by user ID -> http://localhost:8080/apligs-rest/v1/sporocila/prejeto/1
+Get all messages -> http://localhost:8080/apligs-rest/v1/sporocila/
+Get message based on ID -> http://localhost:8080/apligs-rest/v1/sporocila/1
 
 Get all adverts from database -> http://localhost:8080/apligs-rest/v1/oglasi
 Get paging for adverts from db -> http://localhost:8080/apligs-rest/v1/oglasi?offset=1&limit=3
