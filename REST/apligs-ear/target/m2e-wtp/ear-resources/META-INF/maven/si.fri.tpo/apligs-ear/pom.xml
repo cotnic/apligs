@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>si.fri.tpo</groupId>
+		<artifactId>apligs</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>apligs-ear</artifactId>
+	<packaging>ear</packaging>
+	<!-- Dependency for modules in project -->
+	<dependencies>
+		<dependency>
+			<groupId>si.fri.tpo</groupId>
+			<artifactId>apligs-web</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>si.fri.tpo</groupId>
+			<artifactId>apligs-jpa</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>si.fri.tpo</groupId>
+			<artifactId>apligs-vmesniki</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>si.fri.tpo</groupId>
+			<artifactId>apligs-storitve</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>si.fri.tpo</groupId>
+			<artifactId>apligs-rest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.10.1</version>
+				<configuration>
+					<defaultLibBundleDir>lib/</defaultLibBundleDir>
+					<version>7</version>
+					<modules>
+						<webModule>
+							<groupId>si.fri.tpo</groupId> <!-- groupId WAR modula -->
+							<artifactId>apligs-web</artifactId>
+							<contextRoot>/web</contextRoot>
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

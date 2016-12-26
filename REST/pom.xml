@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>si.fri.tpo</groupId>
+	<artifactId>apligs</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Dependencies for other libraries -->
+			<!-- Dependency for java ee -->
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>7.0</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- Dependency for wildfly -->
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>wildfly-javaee7</artifactId>
+				<version>10.1.0.Final</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+			<!-- Dependency for modules in project -->
+			<dependency>
+				<groupId>si.fri.tpo</groupId>
+				<artifactId>apligs-ear</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>ear</type>
+			</dependency>
+			<dependency>
+				<groupId>si.fri.tpo</groupId>
+				<artifactId>apligs-web</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>war</type>
+			</dependency>
+			<dependency>
+				<groupId>si.fri.tpo</groupId>
+				<artifactId>apligs-jpa</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>si.fri.tpo</groupId>
+				<artifactId>apligs-vmesniki</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>si.fri.tpo</groupId>
+				<artifactId>apligs-storitve</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>ejb</type>
+			</dependency>
+			<dependency>
+				<groupId>si.fri.tpo</groupId>
+				<artifactId>apligs-rest</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+				<type>war</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<modules>
+		<module>apligs-web</module>
+		<module>apligs-ear</module>
+		<module>apligs-jpa</module>
+		<module>apligs-vmesniki</module>
+		<module>apligs-storitve</module>
+		<module>apligs-rest</module>
+	</modules>
+</project>
