@@ -75,6 +75,7 @@ create table oglas
    og_objavljen         date not null,
    og_opis              varchar(200) not null,
    og_premium           bool not null,
+   og_band				bool not null,
    primary key (id_oglas)
 );
 
@@ -104,6 +105,8 @@ create table uporabnik
    up_priimek           varchar(50) not null,
    up_email             varchar(70) not null,
    up_ustvarjen         date,
+   up_geslo				varchar(30) not null,
+   up_picture			varchar(50),
    primary key (id_uporabnik)
 );
 
