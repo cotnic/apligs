@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Local;
 
 import si.fri.tpo.model.Sporocilo;
-import si.fri.tpo.model.Uporabnik;
 
 @Local
 public interface UpravljalecSporocilSBLocal {

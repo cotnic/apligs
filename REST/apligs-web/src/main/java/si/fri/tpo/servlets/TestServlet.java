@@ -4,22 +4,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.UserTransaction;
 
-import si.fri.prpo.zrna.vmesniki.UpravljalecOglasovSBLocal;
 import si.fri.prpo.zrna.vmesniki.UpravljalecSporocilSBLocal;
-import si.fri.tpo.model.Ogla;
 import si.fri.tpo.model.Sporocilo;
-import si.fri.tpo.model.Uporabnik;
 
 /**
  * Servlet implementation class TestServlet

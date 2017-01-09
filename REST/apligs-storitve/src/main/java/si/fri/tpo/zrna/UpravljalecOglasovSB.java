@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 import si.fri.prpo.zrna.vmesniki.UpravljalecOglasovSBLocal;
 import si.fri.prpo.zrna.vmesniki.UpravljalecOglasovSBRemote;
 import si.fri.tpo.model.Ogla;
-import si.fri.tpo.model.Uporabnik;
 
 /**
  * Session Bean implementation class UpravljalecOglasovSB
@@ -36,13 +35,12 @@ public class UpravljalecOglasovSB implements UpravljalecOglasovSBRemote, Upravlj
 
 	@Override
 	public void posodobiOglas(Ogla oglas) {
-		// TODO Posodobi uporabnik em.merge
-		
+		em.merge(oglas);
 	}
 
 	@Override
 	public void zbrisiOglas(int id) {
-		em.createNamedQuery("Ogla.deleteId").setParameter("id", id).getSingleResult();
+		em.createNamedQuery("Ogla.deleteId").setParameter("id", id).executeUpdate();
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
 import si.fri.tpo.model.Sporocilo;
-import si.fri.tpo.model.Uporabnik;
 
 @Path("/sporocila")
 @Produces(MediaType.APPLICATION_JSON)

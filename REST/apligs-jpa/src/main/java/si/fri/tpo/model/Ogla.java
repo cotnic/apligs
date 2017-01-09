@@ -40,6 +40,9 @@ public class Ogla implements Serializable {
 
 	@Column(name="og_premium")
 	private byte ogPremium;
+	
+	@Column(name="og_band")
+	private byte ogBand;
 
 	//bi-directional many-to-one association to Zvrst
 	@ManyToOne
@@ -97,6 +100,14 @@ public class Ogla implements Serializable {
 
 	public void setOgPremium(byte ogPremium) {
 		this.ogPremium = ogPremium;
+	}
+	
+	public byte getOgBand() {
+		return this.ogBand;
+	}
+
+	public void setOgBand(byte ogBand) {
+		this.ogBand = ogBand;
 	}
 
 	public Zvrst getZvrst() {

@@ -2,6 +2,9 @@ package si.fri.tpo.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import java.util.List;
 
 
@@ -10,7 +13,13 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Instrument.findAll", query="SELECT i FROM Instrument i")
+@XmlRootElement
+@NamedQueries({
+	@NamedQuery(name="Instrument.findAll", query="SELECT i FROM Instrument i"),
+	@NamedQuery(name="Instrument.findId", query="SELECT i FROM Instrument i WHERE i.idInstrument = :id"),
+	@NamedQuery(name="Instrument.deleteAll", query="DELETE FROM Instrument"),
+	@NamedQuery(name="Instrument.deleteId", query="DELETE FROM Instrument i WHERE i.idInstrument = :id")
+})
 public class Instrument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -45,6 +54,7 @@ public class Instrument implements Serializable {
 		this.inNaziv = inNaziv;
 	}
 
+	@XmlTransient
 	public List<Uporabnik> getUporabniks() {
 		return this.uporabniks;
 	}

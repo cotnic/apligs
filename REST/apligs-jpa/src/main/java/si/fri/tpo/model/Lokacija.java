@@ -2,6 +2,8 @@ package si.fri.tpo.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
+
 import java.util.List;
 
 
@@ -10,7 +12,12 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Lokacija.findAll", query="SELECT l FROM Lokacija l")
+@NamedQueries({
+	@NamedQuery(name="Lokacija.findAll", query="SELECT l FROM Lokacija l"),
+	@NamedQuery(name="Lokacija.findId", query="SELECT l FROM Lokacija l WHERE l.postnaStevilka = :id"),
+	@NamedQuery(name="Lokacija.deleteAll", query="DELETE FROM Lokacija"),
+	@NamedQuery(name="Lokacija.deleteId", query="DELETE FROM Lokacija l WHERE l.postnaStevilka = :id")
+})
 public class Lokacija implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -45,6 +52,7 @@ public class Lokacija implements Serializable {
 		this.loNaziv = loNaziv;
 	}
 
+	@XmlTransient
 	public List<Uporabnik> getUporabniks() {
 		return this.uporabniks;
 	}

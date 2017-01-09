@@ -42,6 +42,9 @@ public class Uporabnik implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "up_ustvarjen")
 	private Date upUstvarjen;
+	
+	@Column(name = "up_picture")
+	private String upPicture;
 
 	// bi-directional many-to-many association to Instrument
 	@ManyToMany
@@ -126,6 +129,14 @@ public class Uporabnik implements Serializable {
 
 	public void setUpUstvarjen(Date upUstvarjen) {
 		this.upUstvarjen = upUstvarjen;
+	}
+
+	public String getUpPicture() {
+		return this.upPicture;
+	}
+
+	public void setUpPicture(String upPicture) {
+		this.upPicture = upPicture;
 	}
 	
 	@XmlTransient
@@ -215,7 +226,6 @@ public class Uporabnik implements Serializable {
 		return sporocilos2;
 	}
 
-	@XmlTransient
 	public Lokacija getLokacija() {
 		return this.lokacija;
 	}
@@ -224,7 +234,6 @@ public class Uporabnik implements Serializable {
 		this.lokacija = lokacija;
 	}
 
-	@XmlTransient
 	public Vloga getVloga() {
 		return this.vloga;
 	}

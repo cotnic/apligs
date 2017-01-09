@@ -12,7 +12,12 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Vloga.findAll", query="SELECT v FROM Vloga v")
+@NamedQueries({
+	@NamedQuery(name="Vloga.findAll", query="SELECT v FROM Vloga v"),
+	@NamedQuery(name="Vloga.findId", query="SELECT v FROM Vloga v WHERE v.idVloga = :id"),
+	@NamedQuery(name="Vloga.deleteAll", query="DELETE FROM Vloga"),
+	@NamedQuery(name="Vloga.deleteId", query="DELETE FROM Vloga v WHERE v.idVloga = :id")
+})
 public class Vloga implements Serializable {
 	private static final long serialVersionUID = 1L;
 

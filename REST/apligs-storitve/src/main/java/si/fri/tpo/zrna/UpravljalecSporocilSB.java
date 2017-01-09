@@ -10,7 +10,6 @@ import javax.persistence.PersistenceContext;
 import si.fri.prpo.zrna.vmesniki.UpravljalecSporocilSBLocal;
 import si.fri.prpo.zrna.vmesniki.UpravljalecSporocilSBRemote;
 import si.fri.prpo.zrna.vmesniki.UpravljalecUporabnikovSBLocal;
-import si.fri.tpo.model.Ogla;
 import si.fri.tpo.model.Sporocilo;
 import si.fri.tpo.model.Uporabnik;
 
@@ -54,13 +53,12 @@ public class UpravljalecSporocilSB implements UpravljalecSporocilSBRemote, Uprav
 
 	@Override
 	public void posodobiSporocilo(Sporocilo sporocilo) {
-		// TODO Implement em.merge
-		
+		em.merge(sporocilo);
 	}
 
 	@Override
 	public void zbrisiSporocilo(int id) {
-		em.createNamedQuery("Sporocilo.deleteId").setParameter("id", id).getSingleResult();
+		em.createNamedQuery("Sporocilo.deleteId").setParameter("id", id).executeUpdate();
 	}
 
 	@Override

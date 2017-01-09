@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.persistence.NoResultException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
@@ -25,10 +24,10 @@ public class UporabnikVir implements UporabnikREST {
 	public Response vrniUporabnike(@QueryParam("offset") int offset, @QueryParam("limit") int limit) {
 		if (limit > 0) {
 			List<Uporabnik> uporabniki = upravljalecUporabnikov.vrniVseUporabnike(offset, limit);
-			return Response.ok(uporabniki.toArray(new Uporabnik[uporabniki.size()])).build();
+			return Response.ok(uporabniki.toArray(new Uporabnik[uporabniki.size()])).header("Access-Control-Allow-Origin", "*").build();
 		}
 		List<Uporabnik> uporabniki = upravljalecUporabnikov.vrniVseUporabnike();
-		return Response.ok(uporabniki.toArray(new Uporabnik[uporabniki.size()])).build();
+		return Response.ok(uporabniki.toArray(new Uporabnik[uporabniki.size()])).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Override
@@ -37,7 +36,7 @@ public class UporabnikVir implements UporabnikREST {
 	public Response vrniUporabnika(@PathParam("id") int id) {
 		Uporabnik uporabnik = upravljalecUporabnikov.vrniUporabnika(id);
 
-		return Response.ok(uporabnik).build();
+		return Response.ok(uporabnik).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Override
@@ -46,13 +45,16 @@ public class UporabnikVir implements UporabnikREST {
 	public Response dodajUporabnika(Uporabnik uporabnik) {
 		upravljalecUporabnikov.shraniUporabnika(uporabnik);
 
-		return Response.ok("ok").build();
+		return Response.ok("ok").header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Override
+	@PUT
+	@Path("/")
 	public Response urediUporabnika(Uporabnik uporabnik) {
-		// TODO Auto-generated method stub
-		return null;
+		upravljalecUporabnikov.posodobiUporabnika(uporabnik);
+
+		return Response.ok("ok").header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Override
@@ -61,7 +63,7 @@ public class UporabnikVir implements UporabnikREST {
 	public Response izbrisiUporabnika(@PathParam("id") int id) {
 		upravljalecUporabnikov.zbrisiUporabnika(id);
 
-		return Response.ok("ok").build();
+		return Response.ok("ok").header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Override
@@ -70,10 +72,9 @@ public class UporabnikVir implements UporabnikREST {
 	public Response vrniUporabnike(@QueryParam("email") String email, @QueryParam("password") String password) {
 		Uporabnik uporabnik = upravljalecUporabnikov.prijaviUporabnika(email, password);
 		if (uporabnik != null)
-			return Response.ok(uporabnik).build();
+			return Response.ok(uporabnik).header("Access-Control-Allow-Origin", "*").build();
 		else
-			return Response.status(204).build();
-
+			return Response.status(204).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 }

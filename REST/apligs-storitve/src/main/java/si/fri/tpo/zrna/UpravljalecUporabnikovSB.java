@@ -41,12 +41,12 @@ public class UpravljalecUporabnikovSB implements UpravljalecUporabnikovSBRemote,
 
 	@Override
 	public void posodobiUporabnika(Uporabnik uporabnik) {
-		// TODO: Implement em.merge
+		em.merge(uporabnik);
 	}
 
 	@Override
 	public void zbrisiUporabnika(int id) {
-		em.createNamedQuery("Uporabnik.deleteId").setParameter("id", id).getSingleResult();
+		em.createNamedQuery("Uporabnik.deleteId").setParameter("id", id).executeUpdate();
 	}
 
 	@Override

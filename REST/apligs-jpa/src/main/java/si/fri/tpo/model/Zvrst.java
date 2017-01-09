@@ -12,7 +12,12 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Zvrst.findAll", query="SELECT z FROM Zvrst z")
+@NamedQueries({
+	@NamedQuery(name="Zvrst.findAll", query="SELECT z FROM Zvrst z"),
+	@NamedQuery(name="Zvrst.findId", query="SELECT z FROM Zvrst z WHERE z.idZvrst = :id"),
+	@NamedQuery(name="Zvrst.deleteAll", query="DELETE FROM Zvrst"),
+	@NamedQuery(name="Zvrst.deleteId", query="DELETE FROM Zvrst z WHERE z.idZvrst = :id")
+})
 public class Zvrst implements Serializable {
 	private static final long serialVersionUID = 1L;
 

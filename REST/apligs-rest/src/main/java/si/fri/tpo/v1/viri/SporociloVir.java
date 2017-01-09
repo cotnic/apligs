@@ -20,13 +20,15 @@ public class SporociloVir implements SporociloREST{
 	UpravljalecSporocilSBLocal upravljalecSporocil;
 
 	@Override
+	@GET
+	@Path("/")
 	public Response vrniSporocila(@QueryParam("offset") int offset, @QueryParam("limit") int limit) {
 		if (limit > 0) {
 			List<Sporocilo> sporocila = upravljalecSporocil.vrniVsaSporocila(offset, limit);
-			return Response.ok(sporocila.toArray(new Sporocilo[sporocila.size()])).build();
+			return Response.ok(sporocila.toArray(new Sporocilo[sporocila.size()])).header("Access-Control-Allow-Origin", "*").build();
 		}
 		List<Sporocilo> sporocila = upravljalecSporocil.vrniVsaSporocila();
-		return Response.ok(sporocila.toArray(new Sporocilo[sporocila.size()])).build();
+		return Response.ok(sporocila.toArray(new Sporocilo[sporocila.size()])).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Override
@@ -35,7 +37,7 @@ public class SporociloVir implements SporociloREST{
 	public Response vrniSporocilo(@PathParam("id") int id) {
 		Sporocilo sporocilo = upravljalecSporocil.vrniSporocilo(id);
 		
-		return Response.ok(sporocilo).build();
+		return Response.ok(sporocilo).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	@Override
@@ -44,7 +46,7 @@ public class SporociloVir implements SporociloREST{
 	public Response vrniPoslano(@PathParam("id") int id) {
 		List<Sporocilo> sporocila = upravljalecSporocil.vrniPoslano(id);
 		
-		return Response.ok(sporocila.toArray(new Sporocilo[sporocila.size()])).build();
+		return Response.ok(sporocila.toArray(new Sporocilo[sporocila.size()])).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	@Override
@@ -53,28 +55,33 @@ public class SporociloVir implements SporociloREST{
 	public Response vrniPrejeto(@PathParam("id") int id) {
 		List<Sporocilo> sporocila = upravljalecSporocil.vrniPrejeto(id);
 		
-		return Response.ok(sporocila.toArray(new Sporocilo[sporocila.size()])).build();
+		return Response.ok(sporocila.toArray(new Sporocilo[sporocila.size()])).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Override
 	@POST
-	public Response dodajSporocilo(Sporocilo Sporocilo) {
-		// TODO Auto-generated method stub
-		return null;
+	@Path("/")
+	public Response dodajSporocilo(Sporocilo sporocilo) {
+		upravljalecSporocil.shraniSporocilo(sporocilo);
+
+		return Response.ok("ok").header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Override
 	@PUT
 	public Response urediSporocilo(Sporocilo sporocilo) {
-		// TODO Auto-generated method stub
-		return null;
+		upravljalecSporocil.posodobiSporocilo(sporocilo);
+		
+		return Response.ok("ok").header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Override
 	@DELETE
-	public Response izbrisiSporocilo(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	@Path("/{id}")
+	public Response izbrisiSporocilo(@PathParam("id") int id) {
+		upravljalecSporocil.zbrisiSporocilo(id);
+
+		return Response.ok("ok").header("Access-Control-Allow-Origin", "*").build();
 	}
 
 }
