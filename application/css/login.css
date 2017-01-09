@@ -10,3 +10,10 @@ input{
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
+
+#logo{
+
+	width: 40%;
+	height:auto;
+	padding: 10px;
+}

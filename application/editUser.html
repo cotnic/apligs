@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>APLIGS - Edit your account</title>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/login.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4 well" style="text-align: center; margin-top: 50px">
+          <form id="registerForm" method="post">      
+              <label>Login information</label>
+              <div id="passwordFormGroup">
+                <input id="password" name="password" type="password" class="form-control" placeholder="New password">
+              </div>
+              <div id="passwordSecondFormGroup">
+                <input id="passwordSecond" name="passwordSecond" type="password" class="form-control" placeholder="Repeat password">  
+              </div>
+              </br>
+              <label>Personal information</label>
+              <div id="firstNameFormGroup">
+                <input id="firstName" name="firstName" type="text" class="form-control" placeholder="First name">
+              </div>
+              <div id="lastNameFormGroup">
+                <input id="lastName" name="lastName" type="text" class="form-control" placeholder="Last name">
+              </div>
+              <div class="form-group" id="locationFormGroup">
+                  <select class="form-control" id="location">
+                      <option disabled selected></option>
+                      <option disabled selected>Location</option>
+                      <option value="loc1">loc1</option>
+                      <option value="loc2">loc2</option>
+                </select>
+              </div>
+              <label>Musical expertise</label></br>
+              <div class="form-group" id="instrumentsFormGroup">
+                <select class="form-control" id="instruments">
+                  <option disabled selected></option>
+                  <option disabled selected>Instrument</option>
+                  <option>Guitar</option>
+                  <option>Bass guitar</option>
+                  <option>Drums</option>
+                  <option>Vocals</option>
+                  <option>Banjo</option>
+                </select>
+              </div>
+              <div class="form-group" id="genreFormGroup">
+                <select class="form-control" id="genre">
+                  <option disabled selected></option>
+                  <option disabled selected>Genre</option>
+                  <option>Rock/metal</option>
+                  <option>Country</option>
+                  <option>Pop</option>
+                  <option>Rap</option>
+                  <option>Jazz</option>
+                </select>
+              </div>
+
+            <input class="btn btn-primary btn-block" id="saveButton" value="Save">  
+            <input class="btn btn-default btn-block" id="cancelButton" value="Cancel">                            
+        </form>
+        <br>
+        <div id="successful">
+        </div>
+        </div>
+    </div>
+
+
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+      $( document ).ready(function() {
+        var username=getCookie("username");
+        if (username!="") {
+          //Load info
+          $.getJSON("http://localhost:8080/apligs-rest/v1/uporabniki", function(data) {
+            for (var i = data.length - 1; i >= 0; i--) {
+              if (data[i].upEmail == username) {
+                alert(data[i].upIme);
+                $("#firstName").val(data[i].upIme);
+                $("#lastName").val(data[i].upPriimek);
+              }
+            }
+         });
+
+        } else {
+          window.location = 'index.html';
+        }
+      });  
+      function returnHome(){
+        window.location.href = 'home.html';
+      }
+      /*SAVE BUTTON*/
+      $("#saveButton").click(function(){
+
+
+        $("#successful").append("<div class=\"alert alert-success\">\
+                                  <strong>Success!</strong> Information saved successfuly. Redirecting...\
+                                </div>");
+        window.setTimeout(returnHome, 2000);
+      });
+
+      /*CANCEL BUTTON*/
+      $("#cancelButton").click(function(event){
+        window.location = 'home.html';
+      });
+
+
+
+    </script>
+</body>
+
+</html>

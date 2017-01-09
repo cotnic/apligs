@@ -33,18 +33,19 @@
             <span class="caret"></span></button>
             <ul class="dropdown-menu">
               <li class="dropdown-header" id="dropDownUsername"></li>
-              <li><a href="#">User settings</a></li>
+              <li><a href="" class="userSetingsButton">User settings</a></li>
               <li><a href="" class="logoutButton">Log out</a></li>
             </ul>
           </div>
       </div>
        <!-- NAVIGATION -->
         <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a data-toggle="pill" href="#contentMostRecent">Most recent posts</a></li>
+          <li class="active"><a data-toggle="pill" href="#contentMostRecent" id="navMostRecent">Most recent posts</a></li>
           <li><a data-toggle="pill" href="#contentBandLooks">Band looking for...</a></li>
           <li><a data-toggle="pill" href="#contentMusicianLooks">Musician looking for...</a></li>
           <li><a data-toggle="pill" href="#newPost">New post</a></li>
-          <li><a href="#" id="searchUsersB">Search users</a></li>
+          <li><a data-toggle="pill" href="#yourPosts">Your posts</a></li>
+          <li><a data-toggle="pill" href="#searchUsers">Search users</a></li>
           <li><a href="#" id="messagesB">Messages <span class="badge" id="unreadMessagesBadge">0/2</span></a></li>
           <li><a href="#" class="logoutButton">Log out</a></li>
         </ul><br>
@@ -52,88 +53,13 @@
       <div class="col-sm-6 well content tab-content">
       <!-- MOST RECENT POSTS -->
         <div id="contentMostRecent" class="tab-pane active fade in"  data-toggle="collapse" data-target="#contentPostDetails">
-          <div class="panel-group" id="accordion">
-            <div class="panel panel-default entry">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <div data-toggle="collapse" data-parent="#accordion" href="#collapse1">
-                    <div id="entryTitle">Rock band looking for guitarist</div>
-                    <br>
-                    <table class="table entryTable">
-                      <tbody>
-                        <tr>
-                          <td class="entryType">Band looking for...</td>
-                          <td class="entryInstrument">Singer</td>
-                          <td class="entryGenre">Pop</td>
-                          <td class="entryDate">3.11.2016</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </h4>
-              </div>
-              <div id="collapse1" class="panel-collapse collapse in">
-                <div class="panel-body">
-                  <p class="entryText">Experienced band from somewhere looking for a skilled guitarist with ability of being quiet..</p>
-                  <button type="button" class="btn btn-primary">Contact user</button>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default entry">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <div data-toggle="collapse" data-parent="#accordion" href="#collapse2">
-                    <div id="entryTitle">Pop group looking for singer</div>
-                    <br>
-                    <table class="table entryTable">
-                      <tbody>
-                        <tr>
-                          <td class="entryType">Band looking for...</td>
-                          <td class="entryInstrument">Singer</td>
-                          <td class="entryGenre">Pop</td>
-                          <td class="entryDate">3.11.2016</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </h4>
-              </div>
-              <div id="collapse2" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p class="entryText">Looking for a good female or male singer in early 20s.</p>
-                  <button type="button" class="btn btn-primary">Contact user</button>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default entry">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <div data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                    <div id="entryTitle">Drummer looking for rock band</div>
-                    <br>
-                    <table class="table entryTable">
-                      <tbody>
-                        <tr>
-                          <td class="entryType">Musician looking for...</td>
-                          <td class="entryInstrument">Drummer</td>
-                          <td class="entryGenre">Rock</td>
-                          <td class="entryDate">2.11.2016</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </h4>
-              </div>
-              <div id="collapse3" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p class="entryText">Hi. I'm looking for a good rock/metal band.</p>
-                  <button type="button" class="btn btn-primary">Contact user</button>
-                </div>
-              </div>
+          <div class="panel-group " id="accordion contentMostRecentInner">
+            <div id="contentMostRecentInner">
+              
             </div>
           </div>
         </div>
-              
+           
         <!-- BAND LOOKING FOR -->
         <div id="contentBandLooks" class="contentPart tab-pane fade">
           <div class="panel-group" id="accordion1">
@@ -316,34 +242,149 @@
             </div>
           </div>
       </div>
+      <!-- YOUR POSTS -->
+      <div id="yourPosts" class="contentPart tab-pane fade" >
+        Posts
+      </div>
+      <!-- SEARCH USERS -->
+      <div id="searchUsers" class="contentPart tab-pane fade">
+        <div class="tab-content">
+          <form>
+             <input id="searchEmail" name="searchEmail" type="text" class="form-control" placeholder="E-mail (Can be empty)"><br>
+
+             <div class="col-sm-4">
+               <div class="form-group" id="instrumentsFormGroupSearch">
+                  <select class="form-control" id="searchInstruments">
+                    <option disabled selected></option>
+                    <option disabled selected>Filter: Instrument</option>
+                    <option>Guitar</option>
+                    <option>Bass guitar</option>
+                    <option>Drums</option>
+                    <option>Vocals</option>
+                    <option>Banjo</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" id="genreFormGroupSearch">
+                  <select class="form-control" id="searchGenre">
+                    <option disabled selected></option>
+                    <option disabled selected>Filter: Genre</option>
+                    <option>Rock/metal</option>
+                    <option>Country</option>
+                    <option>Pop</option>
+                    <option>Rap</option>
+                    <option>Jazz</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group" id="locationFormGroupSearch">
+                    <select class="form-control" id="searchLocation">
+                        <option disabled selected></option>
+                        <option disabled selected>Filter: Location</option>
+                        <option value="loc1">loc1</option>
+                        <option value="loc2">loc2</option>
+                  </select>
+                </div>
+              </div>
+              <input type="submit" class="btn btn-primary btn-block" value="Search"> 
+          </form>
+          <br>
+          <div id="searchResults" >
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="col-md-12 resultsName">
+                  Janez Novak
+                </div>
+                <div class="col-md-2 column resultsInstrument">
+                  Vocals
+                </div> 
+                <div class="col-md-2 column resultsLocation">
+                  Ljubljana
+                </div>
+                <div class="col-md-2 column resultsGenre">
+                  Rock
+                </div>
+                <div class="col-md-2 col-md-offset-4 column">
+                  <button type="submit" class="btn btn-primary btn-block resultsContactUser"><span class="glyphicon glyphicon-envelope"></span></button>
+                </div>
+              </div>
+            </div>
+          </div>         
+        </div>
     </div>
   </div>
 
   <!-- Bootstrap Core JavaScript -->
   <script src="js/bootstrap.min.js"></script>
   <script>
+    var offset = 0;
+    var limit = 6;
+    function getLatestAdds(){
+      $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi?offset=" + offset +"0&limit=" + limit +"", function(data) {
+        for (var i = data.length - 1; i >= 0; i--) {
+          $("#contentMostRecentInner").innerHTML = "";
+          $("#contentMostRecentInner").append("<div class=\"panel panel-default entry\" id=\"entry" + i +"\">\
+          <div class=\"panel-heading\">\
+            <h4 class=\"panel-title\">\
+              <div data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + i + "\">\
+                <div id=\"entryTitle\">" + data[i].ogNaslov +"</div>\
+                <br>\
+                <table class=\"table entryTable\">\
+                  <tbody>\
+                    <tr>\
+                      <td class=\"entryType\">Band looking for...</td>\
+                      <td class=\"entryInstrument\">TODO</td>\
+                      <td class=\"entryGenre\">" + data[i].zvrst.zvNaziv + "</td>\
+                      <td class=\"entryDate\">" + data[i].ogObjavljen + "</td>\
+                    </tr>\
+                  </tbody>\
+                </table>\
+              </div>\
+            </h4>\
+          </div>\
+          <div id=\"collapse" + i + "\" class=\"panel-collapse collapse\">\
+            <div class=\"panel-body\">\
+              <p class=\"entryText\">" + data[i].ogOpis + "</p>\
+              <button type=\"button\" class=\"btn btn-primary\">Contact user</button>\
+            </div>\
+          </div>\
+        </div>");
+        }
+      })
+    }
+
     $( document ).ready(function() {
       var username=getCookie("username");
       if (username!="") {
           $("#dropDownUsername").text(username);
+          getLatestAdds();
+          $('.content').height($('.content').height()+100);  
       } else {
           window.location = 'index.html';
       }
-  
+    });   
+
     /*LOGOUT BUTTON*/
     $(".logoutButton").click(function(){
         document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
         window.location = 'index.html';
     });
-    
 
-  });   /* $(window).scroll(function () {
+    /*USER SETTING*/
+    $(".userSetingsButton").click(function(){
+      window.location = 'editUser.html';
+    });
+
+
+
+   $(window).scroll(function () {
     if ($(window).scrollTop() + $(window).height() >= 
     $('.content').offset().top + $('.content').height() ) { 
     $('.content').height($('.content').height()+100);
-  alert("povečava");
     }    
-  });*/
+  });
   </script>
 
 </body>

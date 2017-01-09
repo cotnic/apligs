@@ -27,7 +27,7 @@
         <div class="col-sm-4 col-sm-offset-4" style="text-align: center; margin-top: 50px">
             <div id="container-login">
                 <div class="panel panel-default">
-                      <h3>Welcome to APLIGS!</h3>
+                      <img id="logo" src="assets/LogoNapis.png">
                       <ul class="nav nav-pills nav-justified">
                         <li class="active"><a data-toggle="pill" href="#login">Sign in</a></li>
                         <li><a data-toggle="pill" href="#register">Register</a></li>
@@ -36,7 +36,7 @@
                   <div class="panel-body">
                      <div class="tab-content">
                           <div id="login" class="tab-pane fade in active">
-                              <form id="loginForm">      
+                              <form id="loginForm" method="post">      
                                   <input id="email" name="email" type="text" class="form-control" placeholder="E-mail">
                                   <input id="password" name="password" type="password" class="form-control" placeholder="Password">   
                                   <div class="checkbox">
@@ -47,7 +47,7 @@
                               <p id="loginErrorMsg" class="text-danger"></p>
                           </div>
                           <div id="register" class="tab-pane fade in">
-                            <form id="registerForm">      
+                            <form id="registerForm" method="post">      
                                 <label>Login information</label>
                                 <div id="emailFormGroup">
                                   <input id="email" name="email" type="text" class="form-control" placeholder="E-mail">
@@ -71,7 +71,7 @@
                                         <option value="loc2">loc2</option>
                                   </select>
                                 </div>
-                                <label>Musical expertise</label></br><small class="form-text text-muted">Drag or CTRL+click to select multiple.</small>
+                                <label>Musical expertise</label></br>
                                 <div class="form-group" id="instrumentsFormGroup">
                                   <select class="form-control" id="instruments">
                                     <option disabled selected></option>
@@ -111,24 +111,97 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script>
+
     $("#loginForm").submit(function(event){
       event.preventDefault();
       var $form = $( this ),
         email = $form.find( "input[name='email']" ).val(),
         password = $form.find( "input[name='password']" ).val();
-      if (email == "test@test.com" && password == "test") {
-        var dateNow = new Date();
-        dateNow.setHours(dateNow.getHours() + 1);
-        document.cookie = "username="+email+";expires="+dateNow
-        document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
-        window.location = 'home.html';
-        $("#loginErrorMsg").text("");
-        return false;        
-      }else{
-        $("#loginErrorMsg").text("Invalid username or password");
-      }
-    });
+        if (password=="test") {
+          var dateNow = new Date();
+          dateNow.setHours(dateNow.getHours() + 1);
+          document.cookie = "username="+email+";expires="+dateNow
+          document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
+          window.location = 'home.html';
+          $("#loginErrorMsg").text("");
+          return false;        
+        }else{
+          $("#loginErrorMsg").text("Invalid username or password");
+        }  
+        /*   $.get("http://88.200.98.85:8080/apligs/v1/users/login?email=mj0073@student.uni-lj.si&password=mitja", function(json){
+          alert(json);
+        });*/
 
+    /*  $.ajax({
+        url: "http://88.200.98.85:8080/apligs/v1/users/login?email=mj0073@student.uni-lj.si&password=mitja",
+        dataType: "jsonp",
+        success: function(data){
+          alert("tukaj");
+        },
+        error: function(jqXHR, exception, data){
+        var msg = '';
+        if (jqXHR.status === 0) {
+            msg = 'Not connect.\n Verify Network.';
+        } else if (jqXHR.status == 404) {
+            msg = 'Requested page not found. [404]';
+        } else if (jqXHR.status == 500) {
+            msg = 'Internal Server Error [500].';
+        } else if (exception === 'parsererror') {
+            msg = 'Requested JSON parse failed.';
+        } else if (exception === 'timeout') {
+            msg = 'Time out error.';
+        } else if (exception === 'abort') {
+            msg = 'Ajax request aborted.';
+        } else {
+            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+        }
+        alert(msg);
+        }
+      });
+    /*  $.ajax({
+           url:"http://88.200.98.85:8080/apligs/v1/users/login?email=mj0073@student.uni-lj.si&password=mitja",//http://88.200.98.85:8080/apligs/v1/users/login?email="+email+"&password="+password,
+           dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
+           success: function(json){
+               // do stuff with json (in this case an array)
+               alert("Success");
+           },
+           error:function(xhr, textStatus, errorThrown){
+               alert(xhr);
+           }      
+        });
+       /* $.ajax({
+          url:"http://88.200.98.85:8080/apligs/v1/users/login?email="+email+"&password="+password,
+          .done(function(json){
+            alert("json");
+            if (data != "false") {
+              var dateNow = new Date();
+              dateNow.setHours(dateNow.getHours() + 1);
+              document.cookie = "username="+email+";expires="+dateNow
+              document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
+              window.location = 'home.html';
+              $("#loginErrorMsg").text("");
+              return false;        
+            }else{
+              $("#loginErrorMsg").text("Invalid username or password");
+            }    
+          },
+          dataType: 'jsonp'
+        });
+     /* $.ajax(url:"http://88.200.98.85:8080/apligs/v1/users/login?email="+email+"&password="+password, dataType: "jsonp", success:function(json){
+            alert(data);
+            if (data != "false") {
+              var dateNow = new Date();
+              dateNow.setHours(dateNow.getHours() + 1);
+              document.cookie = "username="+email+";expires="+dateNow
+              document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
+              window.location = 'home.html';
+              $("#loginErrorMsg").text("");
+              return false;        
+            }else{
+              $("#loginErrorMsg").text("Invalid username or password");
+            }    
+      });*/
+});
     $("#registerForm").submit(function(event){
       event.preventDefault();
       var $form = $( this ),
@@ -181,6 +254,7 @@
         dateNow.setHours(dateNow.getHours() + 1);
         document.cookie = "username="+email+";expires="+dateNow;
         document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
+        document.cookie = "username="+email+";expires="+dateNow+"; path=./editUser.html";
         window.location = 'home.html';        
       }
     });
