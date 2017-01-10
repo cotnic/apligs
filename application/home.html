@@ -27,7 +27,7 @@
       <div class="col-sm-2 col-sm-offset-1 well" id="sidebarWrapper">
       <!-- USER -->
       <div class="well">
-         <img src="assets/usr1.jpg" class="img-responsive" alt="Random Name">  
+         <img src="assets/users/usr1.jpg" class="img-responsive" alt="Random Name">  
          <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width: 100%;">
             <span class="caret"></span></button>
@@ -41,11 +41,11 @@
        <!-- NAVIGATION -->
         <ul class="nav nav-pills nav-stacked">
           <li class="active"><a data-toggle="pill" href="#contentMostRecent" id="navMostRecent">Most recent posts</a></li>
-          <li><a data-toggle="pill" href="#contentBandLooks">Band looking for...</a></li>
-          <li><a data-toggle="pill" href="#contentMusicianLooks">Musician looking for...</a></li>
-          <li><a data-toggle="pill" href="#newPost">New post</a></li>
-          <li><a data-toggle="pill" href="#yourPosts">Your posts</a></li>
-          <li><a data-toggle="pill" href="#searchUsers">Search users</a></li>
+          <li><a data-toggle="pill" href="#contentBandLooks" id="navBandLooks">Band looking for...</a></li>
+          <li><a data-toggle="pill" href="#contentMusicianLooks" id="navMusicianLooks">Musician looking for...</a></li>
+          <li><a data-toggle="pill" href="#newPost" id="navNewPost">New post</a></li>
+          <li><a data-toggle="pill" href="#yourPosts" id="navYourPosts">Your posts</a></li>
+          <li><a data-toggle="pill" href="#searchUsers" id="navSearchUsers">Search users</a></li>
           <li><a href="#" id="messagesB">Messages <span class="badge" id="unreadMessagesBadge">0/2</span></a></li>
           <li><a href="#" class="logoutButton">Log out</a></li>
         </ul><br>
@@ -63,89 +63,17 @@
         <!-- BAND LOOKING FOR -->
         <div id="contentBandLooks" class="contentPart tab-pane fade">
           <div class="panel-group" id="accordion1">
-            <div class="panel panel-default entry">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <div data-toggle="collapse" data-parent="#accordion1" href="#collapse5">
-                    <div id="entryTitle">Rock band looking for guitarist</div>
-                    <br>
-                    <table class="table entryTable">
-                      <tbody>
-                        <tr>
-                          <td class="entryType">Band looking for...</td>
-                          <td class="entryInstrument">Singer</td>
-                          <td class="entryGenre">Pop</td>
-                          <td class="entryDate">3.11.2016</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </h4>
-              </div>
-              <div id="collapse5" class="panel-collapse collapse in">
-                <div class="panel-body">
-                  <p class="entryText">Experienced band from somewhere looking for a skilled guitarist with ability of being quiet..</p>
-                  <button type="button" class="btn btn-primary">Contact user</button>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default entry">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <div data-toggle="collapse" data-parent="#accordion1" href="#collapse6">
-                    <div id="entryTitle">Pop group looking for singer</div>
-                    <br>
-                    <table class="table entryTable">
-                      <tbody>
-                        <tr>
-                          <td class="entryType">Band looking for...</td>
-                          <td class="entryInstrument">Singer</td>
-                          <td class="entryGenre">Pop</td>
-                          <td class="entryDate">3.11.2016</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </h4>
-              </div>
-              <div id="collapse6" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p class="entryText">Looking for a good female or male singer in early 20s.</p>
-                  <button type="button" class="btn btn-primary">Contact user</button>
-                </div>
-              </div>
+            <div id="contentBandLooksInner">
+              
             </div>
           </div>
         </div>
         <!-- MUSICIAN LOOKING FOR -->
         <div id="contentMusicianLooks" class="contentPart tab-pane fade">
           <div class="panel-group" id="accordion">
-            <div class="panel panel-default entry">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <div data-toggle="collapse" data-parent="#accordion" href="#collapse7">
-                    <div id="entryTitle">Drummer looking for rock band</div>
-                    <br>
-                    <table class="table entryTable">
-                      <tbody>
-                        <tr>
-                          <td class="entryType">Musician looking for...</td>
-                          <td class="entryInstrument">Drummer</td>
-                          <td class="entryGenre">Rock</td>
-                          <td class="entryDate">2.11.2016</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </h4>
-              </div>
-              <div id="collapse7" class="panel-collapse collapse">
-                <div class="panel-body">
-                  <p class="entryText">Hi. I'm looking for a good rock/metal band.</p>
-                  <button type="button" class="btn btn-primary">Contact user</button>
-                </div>
-              </div>
-            </div> 
+            <div id="contentMusicianLooksInner">
+              
+            </div>
           </div>     
         </div>
         <!-- NEW POST -->
@@ -158,159 +86,104 @@
           <div class="tab-content">
             <div id="newPostBandLooks" class="tab-pane fade in active">
             <br>
-            <form>
+            <form class="newPostForm" method="post">
               <div class="form-group" id="instrumentsFormGroup">
                 <select class="form-control" id="instruments">
-                  <option disabled selected></option>
-                  <option disabled selected>The instrument you are look for</option>
-                  <option>Guitar</option>
-                  <option>Bass guitar</option>
-                  <option>Drums</option>
-                  <option>Vocals</option>
-                  <option>Banjo</option>
+                  <option disabled selected value="-1"></option>
+                  <option disabled selected value="-1">The instrument you are look for</option>
                 </select>
               </div>
               <div class="form-group" id="genreFormGroup">
                 <select class="form-control" id="genre">
-                  <option disabled selected></option>
-                  <option disabled selected>Your genre</option>
-                  <option>Rock/metal</option>
-                  <option>Country</option>
-                  <option>Pop</option>
-                  <option>Rap</option>
-                  <option>Jazz</option>
+                  <option disabled selected value="-1"></option>
+                  <option disabled selected value="-1">Your genre</option>
                 </select>
               </div>
               <div class="form-group" id="locationFormGroup">
-                  <select class="form-control" id="location">
-                      <option disabled selected></option>
-                      <option disabled selected>Location of your band</option>
-                      <option value="loc1">loc1</option>
-                      <option value="loc2">loc2</option>
-                </select>
+                <input id="location" name="location" type="text" class="form-control" disabled placeholder="Location">
               </div>
-              <div id="titleFormGroup">
+              <div class="form-group" id="titleFormGroup">
                 <input id="postTitle" name="postTitle" type="text" class="form-control" placeholder="Post title">
               </div>
               <br>
-              <div class="form-group">
+              <div class="form-group" id="detailsFormGroup">
                 <textarea class="form-control" rows="5" id="postDetails" name="postDetails" placeholder="Post details"></textarea>
               </div>
               <input type="submit" class="btn btn-primary btn-block" value="Publish">  
             </form>
+            <br>
+            <div class="postAddedSuccess">
+            </div>
             </div>
             <div id="newPostMusicianlooks" class="tab-pane fade">
               <br>
-              <div class="form-group" id="instrumentsFormGroup">
-                <select class="form-control" id="instruments">
-                  <option disabled selected></option>
-                  <option disabled selected>The instrument you offer</option>
-                  <option>Guitar</option>
-                  <option>Bass guitar</option>
-                  <option>Drums</option>
-                  <option>Vocals</option>
-                  <option>Banjo</option>
-                </select>
-              </div>
-              <div class="form-group" id="genreFormGroup">
-                <select class="form-control" id="genre">
-                  <option disabled selected></option>
-                  <option disabled selected>Your preffered genre</option>
-                  <option>Rock/metal</option>
-                  <option>Country</option>
-                  <option>Pop</option>
-                  <option>Rap</option>
-                  <option>Jazz</option>
-                </select>
-              </div>
-              <div class="form-group" id="locationFormGroup">
-                  <select class="form-control" id="location">
-                      <option disabled selected></option>
-                      <option disabled selected>Your location</option>
-                      <option value="loc1">loc1</option>
-                      <option value="loc2">loc2</option>
-                </select>
-              </div>
-              <div id="titleFormGroup">
-                <input id="postTitle" name="postTitle" type="text" class="form-control" placeholder="Post title">
-              </div>
+              <form class="newPostForm" method="post">
+                <div class="form-group" id="instrumentsFormGroup2">
+                  <select class="form-control" id="instruments2">
+                    <option disabled selected value="-1"></option>
+                    <option disabled selected value="-1">The instrument you offer</option>
+
+                  </select>
+                </div>
+                <div class="form-group" id="genreFormGroup2">
+                  <select class="form-control" id="genre2">
+                    <option disabled selected value="-1"></option>
+                    <option disabled selected value="-1">Your preffered genre</option>
+
+                  </select>
+                </div>
+                <div class="form-group" id="locationFormGroup2">
+                  <input id="location2" name="location2" type="text" class="form-control" disabled placeholder="Location">
+                </div>
+                <div class="form-group" id="titleFormGroup2">
+                  <input id="postTitle2" name="postTitle2" type="text" class="form-control" placeholder="Post title">
+                </div>
+                <br>
+                <div class="form-group" id="detailsFormGroup2">
+                  <textarea class="form-control" rows="5" id="postDetails2" name="postDetails2" placeholder="Post details"></textarea>
+                </div>
+                <input type="submit" class="btn btn-primary btn-block" value="Publish">  
+              </form>
               <br>
-              <div class="form-group">
-                <textarea class="form-control" rows="5" id="postDetails" name="postDetails" placeholder="Post details"></textarea>
+              <div class="postAddedSuccess">
               </div>
-              <input type="submit" class="btn btn-primary btn-block" value="Publish">  
             </div>
           </div>
       </div>
-      <!-- YOUR POSTS -->
+      <!-- YOUR POSTS -->           
       <div id="yourPosts" class="contentPart tab-pane fade" >
-        Posts
+        <div class="panel-group" id="accordion">
+          <div id="yourPostsInner">
+            
+          </div>
+        </div>
       </div>
       <!-- SEARCH USERS -->
       <div id="searchUsers" class="contentPart tab-pane fade">
         <div class="tab-content">
-          <form>
+          <form id="searchUsersForm">
              <input id="searchEmail" name="searchEmail" type="text" class="form-control" placeholder="E-mail (Can be empty)"><br>
 
              <div class="col-sm-4">
                <div class="form-group" id="instrumentsFormGroupSearch">
                   <select class="form-control" id="searchInstruments">
-                    <option disabled selected></option>
-                    <option disabled selected>Filter: Instrument</option>
-                    <option>Guitar</option>
-                    <option>Bass guitar</option>
-                    <option>Drums</option>
-                    <option>Vocals</option>
-                    <option>Banjo</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group" id="genreFormGroupSearch">
-                  <select class="form-control" id="searchGenre">
-                    <option disabled selected></option>
-                    <option disabled selected>Filter: Genre</option>
-                    <option>Rock/metal</option>
-                    <option>Country</option>
-                    <option>Pop</option>
-                    <option>Rap</option>
-                    <option>Jazz</option>
+                    <option disabled selected value="-1"></option>
+                    <option disabled selected value="-1">Filter: Instrument</option>
                   </select>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group" id="locationFormGroupSearch">
                     <select class="form-control" id="searchLocation">
-                        <option disabled selected></option>
-                        <option disabled selected>Filter: Location</option>
-                        <option value="loc1">loc1</option>
-                        <option value="loc2">loc2</option>
+                        <option disabled selected value="-1"></option>
+                        <option disabled selected value="-1">Filter: Location</option>
                   </select>
                 </div>
               </div>
-              <input type="submit" class="btn btn-primary btn-block" value="Search"> 
+              <input type="submit" class="btn btn-primary btn-block" id="searchUsersSubmitButton" value="Search"> 
           </form>
           <br>
           <div id="searchResults" >
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <div class="col-md-12 resultsName">
-                  Janez Novak
-                </div>
-                <div class="col-md-2 column resultsInstrument">
-                  Vocals
-                </div> 
-                <div class="col-md-2 column resultsLocation">
-                  Ljubljana
-                </div>
-                <div class="col-md-2 column resultsGenre">
-                  Rock
-                </div>
-                <div class="col-md-2 col-md-offset-4 column">
-                  <button type="submit" class="btn btn-primary btn-block resultsContactUser"><span class="glyphicon glyphicon-envelope"></span></button>
-                </div>
-              </div>
-            </div>
           </div>         
         </div>
     </div>
@@ -320,22 +193,29 @@
   <script src="js/bootstrap.min.js"></script>
   <script>
     var offset = 0;
-    var limit = 6;
+    var limit = 6666;
     function getLatestAdds(){
       $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi?offset=" + offset +"0&limit=" + limit +"", function(data) {
+        $("#contentMostRecentInner").html("");
+        $("#contentBandLooksInner").html("");
+        $("#contentMusicianLooksInner").html("");
+        $("#yourPostsInner").html("");
         for (var i = data.length - 1; i >= 0; i--) {
-          $("#contentMostRecentInner").innerHTML = "";
-          $("#contentMostRecentInner").append("<div class=\"panel panel-default entry\" id=\"entry" + i +"\">\
+          var entryType = "Band looking for...";
+          if (!data[i].ogBand) {
+            entryType = "Musician looking for...";
+          }
+          $("#contentMostRecentInner").append("<div class=\"panel panel-default entry\" id=\"entry" + data[i].idOglas +"\">\
           <div class=\"panel-heading\">\
             <h4 class=\"panel-title\">\
-              <div data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + i + "\">\
+              <div data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + data[i].idOglas + "\">\
                 <div id=\"entryTitle\">" + data[i].ogNaslov +"</div>\
                 <br>\
                 <table class=\"table entryTable\">\
                   <tbody>\
                     <tr>\
-                      <td class=\"entryType\">Band looking for...</td>\
-                      <td class=\"entryInstrument\">TODO</td>\
+                      <td class=\"entryType\">" + entryType + "</td>\
+                      <td class=\"entryInstrument\">" + data[i].vloga.vlNaziv + "</td>\
                       <td class=\"entryGenre\">" + data[i].zvrst.zvNaziv + "</td>\
                       <td class=\"entryDate\">" + data[i].ogObjavljen + "</td>\
                     </tr>\
@@ -344,7 +224,7 @@
               </div>\
             </h4>\
           </div>\
-          <div id=\"collapse" + i + "\" class=\"panel-collapse collapse\">\
+          <div id=\"collapse" + data[i].idOglas + "\" class=\"panel-collapse collapse\">\
             <div class=\"panel-body\">\
               <p class=\"entryText\">" + data[i].ogOpis + "</p>\
               <button type=\"button\" class=\"btn btn-primary\">Contact user</button>\
@@ -369,6 +249,7 @@
     /*LOGOUT BUTTON*/
     $(".logoutButton").click(function(){
         document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+        document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
         window.location = 'index.html';
     });
 
@@ -377,14 +258,383 @@
       window.location = 'editUser.html';
     });
 
+    /*MOST RECENT POSTS*/
+    $("#navMostRecent").click(function(){
+      offset = 0;
+      limit = 6666;
+      getLatestAdds();
+    });
 
+    /*BAND LOOKING FOR...*/
+    $("#navBandLooks").click(function(){
+      offset = 0;
+      limit = 6666;
+      $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi?offset=" + offset +"0&limit=" + limit +"", function(data) {
+        $("#contentBandLooksInner").html("");
+       $("#contentMostRecentInner").html("");
+       $("#yourPostsInner").html("");
+        for (var i = data.length - 1; i >= 0; i--) {
+          var entryType = "Band looking for...";
+          if (!data[i].ogBand) {
+            continue;
+          }
+          $("#contentBandLooksInner").append("<div class=\"panel panel-default entry\" id=\"entry" + data[i].idOglasi +"\">\
+          <div class=\"panel-heading\">\
+            <h4 class=\"panel-title\">\
+              <div data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + data[i].idOglas + "\">\
+                <div id=\"entryTitle\">" + data[i].ogNaslov +"</div>\
+                <br>\
+                <table class=\"table entryTable\">\
+                  <tbody>\
+                    <tr>\
+                      <td class=\"entryType\">" + entryType + "</td>\
+                      <td class=\"entryInstrument\">" + data[i].vloga.vlNaziv + "</td>\
+                      <td class=\"entryGenre\">" + data[i].zvrst.zvNaziv + "</td>\
+                      <td class=\"entryDate\">" + data[i].ogObjavljen + "</td>\
+                    </tr>\
+                  </tbody>\
+                </table>\
+              </div>\
+            </h4>\
+          </div>\
+          <div id=\"collapse" + data[i].idOglas + "\" class=\"panel-collapse collapse\">\
+            <div class=\"panel-body\">\
+              <p class=\"entryText\">" + data[i].ogOpis + "</p>\
+              <button type=\"button\" class=\"btn btn-primary\">Contact user</button>\
+            </div>\
+          </div>\
+        </div>");
+        }
+      });
+    });
 
-   $(window).scroll(function () {
-    if ($(window).scrollTop() + $(window).height() >= 
-    $('.content').offset().top + $('.content').height() ) { 
-    $('.content').height($('.content').height()+100);
-    }    
-  });
+    /*MUSICIAN LOOKING FOR...*/
+    $("#navMusicianLooks").click(function(){
+      offset = 0;
+      limit = 666;
+      $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi?offset=" + offset +"0&limit=" + limit +"", function(data) {
+        $("#contentMusicianLooksInner").html("");
+        $("#contentMostRecentInner").html("");
+        $("#yourPostsInner").html("");
+        for (var i = data.length - 1; i >= 0; i--) {
+          var entryType = "Musican looking for...";
+          if (data[i].ogBand) {
+            continue;
+          }
+          $("#contentMusicianLooksInner").append("<div class=\"panel panel-default entry\" id=\"entry" + data[i].idOglas +"\">\
+          <div class=\"panel-heading\">\
+            <h4 class=\"panel-title\">\
+              <div data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + data[i].idOglas + "\">\
+                <div id=\"entryTitle\">" + data[i].ogNaslov +"</div>\
+                <br>\
+                <table class=\"table entryTable\">\
+                  <tbody>\
+                    <tr>\
+                      <td class=\"entryType\">" + entryType + "</td>\
+                      <td class=\"entryInstrument\">" + data[i].vloga.vlNaziv + "</td>\
+                      <td class=\"entryGenre\">" + data[i].zvrst.zvNaziv + "</td>\
+                      <td class=\"entryDate\">" + data[i].ogObjavljen + "</td>\
+                    </tr>\
+                  </tbody>\
+                </table>\
+              </div>\
+            </h4>\
+          </div>\
+          <div id=\"collapse" + data[i].idOglas + "\" class=\"panel-collapse collapse\">\
+            <div class=\"panel-body\">\
+              <p class=\"entryText\">" + data[i].ogOpis + "</p>\
+              <button type=\"button\" class=\"btn btn-primary\">Contact user</button>\
+            </div>\
+          </div>\
+        </div>");
+        }
+      });
+    });
+
+    /*NEW POST*/
+    $("#navNewPost").click(function(event){
+      $("#instruments").html(""); 
+      $("#instruments2").html("");
+      $("#genre").html("");
+      $("#genre2").html("");
+      $('#instruments').append($('<option>', { 
+          value: -1,
+          text : "The instrument you are looking for" 
+      }));
+      $('#instruments2').append($('<option>', { 
+          value: -1,
+          text : "The instrument you offer" 
+      }));
+      $('#genre').append($('<option>', { 
+          value: -1,
+          text : "Your genre"
+      }));
+      $('#genre2').append($('<option>', { 
+          value: -1,
+          text : "Your genre"
+      }));
+      //FILL FORM
+      //Instruments
+      $.getJSON("http://localhost:8080/apligs-rest/v1/vloge", function(data) {
+        $.each(data, function(i, instrument) {
+          $('#instruments').append($('<option>', { 
+              value: instrument.idVloga,
+              text : instrument.vlNaziv 
+          }));
+          $('#instruments2').append($('<option>', { 
+              value: instrument.idVloga,
+              text : instrument.vlNaziv 
+          }));
+        });
+      });
+      //Location
+      $.getJSON("http://localhost:8080/apligs-rest/v1/uporabniki/"+getCookie("id"), function(data) {
+        $("#location").val(data.lokacija.loNaziv);
+        $("#location2").val(data.lokacija.loNaziv);
+      });
+      //Genres
+      $.getJSON("http://localhost:8080/apligs-rest/v1/zvrsti", function(data) {
+        $.each(data, function(i, genre) {
+          $('#genre').append($('<option>', { 
+              value: genre.idZvrst,
+              text : genre.zvNaziv 
+          }));
+          $('#genre2').append($('<option>', { 
+              value: genre.idZvrst,
+              text : genre.zvNaziv 
+          }));
+        });
+      });
+    });
+    /*NEW POST SUBMIT*/
+    $(".newPostForm").submit(function(event){
+      event.preventDefault();
+      var date = new Date();
+      var ogBand = 0;
+      var dodatek = "";
+      if ($("#newPostBandLooks").hasClass("active")) {
+        ogBand = 1;
+      }
+      if (ogBand == 0) {
+        dodatek = "2";
+      }
+      var $form = $( this ),
+        ogNaslov = $form.find( "input[name='postTitle" + dodatek + "']" ).val(),
+        ogOpis = $form.find( "textarea[name='postDetails" + dodatek + "']" ).val(),
+        ogObjavljen = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate(),
+        ogPremium = 0,
+        idZvrst = $form.find("select[id='genre" + dodatek + "']").find(":selected").val(),
+        idVloga = $form.find("select[id='instruments" + dodatek + "']").find(":selected").val(),
+        idUporabnik = getCookie("id");
+      var error = false;
+      if (ogNaslov.length < 1) {
+        $("#titleFormGroup" + dodatek).addClass("has-error");
+        error=true;
+      }else{
+        $("#titleFormGroup" + dodatek).removeClass("has-error");
+      }
+      if (ogOpis.length < 1) {
+        $("#detailsFormGroup" + dodatek).addClass("has-error");
+        error=true;
+      }else{
+        $("#detailsFormGroup" + dodatek).removeClass("has-error");
+      }
+      if (idZvrst == "-1" || idZvrst == null) {
+        $("#genreFormGroup" + dodatek).addClass("has-error");
+        error=true;
+      }else{
+        $("#genreFormGroup" + dodatek).removeClass("has-error");
+      }
+      if (idVloga == "-1" || idVloga == null) {
+        $("#instrumentsFormGroup" + dodatek).addClass("has-error");
+        error=true;
+      }else{
+        $("#instrumentsFormGroup" + dodatek).removeClass("has-error");
+      }
+      if (!error) {
+        var zvrst = new Object();
+        zvrst.idZvrst = idZvrst;
+        var uporabnik = new Object();
+        uporabnik.idUporabnik = idUporabnik;
+        var vloga = new Object();
+        vloga.idVloga = idVloga;
+        var post = new Object();
+        post.ogNaslov = ogNaslov;
+        post.ogObjavljen = ogObjavljen;
+        post.ogOpis = ogOpis;
+        post.ogPremium = ogPremium;
+        post.ogBand = ogBand;
+        post.zvrst = zvrst;
+        post.uporabnik = uporabnik;
+        post.vloga = vloga;
+        var userData = JSON.stringify(post);
+        $.ajax({
+          type: "POST",
+          crossDomain: true,
+          beforeSend: function(request) {
+            request.setRequestHeader("Content-Type", "application/json"); 
+          },
+          url: "http://localhost:8080/apligs-rest/v1/oglasi",
+          data: userData,
+          dataType: "text"
+        }) 
+        .done(function(msg) {
+          $(".postAddedSuccess").append("<div class=\"alert alert-success\">\
+                                    <strong>Success!</strong> Information saved successfuly. Redirecting...\
+                                  </div>");
+          window.setTimeout(returnHome, 2000);      
+       })  
+      }
+    });
+
+    function returnHome(){
+      $(".postAddedSuccess").html("");
+      window.location.href = 'home.html'; 
+    }
+
+    /*YOUR POSTS*/
+    function editPost(postID){
+      var dateNow = new Date();
+      dateNow.setHours(dateNow.getHours() + 1);
+      document.cookie = "postId="+postID+";expires="+dateNow+"; path=./editPost.html";
+      window.location = 'editPost.html';
+    }
+
+    function deletePost(postID){
+      if (confirm("Are you sure you want to delete this post?")){
+        $.ajax({
+          type: "DELETE",
+          crossDomain: true,
+          beforeSend: function(request) {
+            request.setRequestHeader("Content-Type", "application/json"); 
+          },
+          url: "http://localhost:8080/apligs-rest/v1/oglasi/"+postID,
+          dataType: "text"
+        }) 
+        .done(function(msg) {
+          $("#entry"+postID).html("<div class=\"alert alert-danger\"><strong>Deleted!</strong> Post was successfuly deleted.</div>")     
+        })  
+      }
+    }
+
+    $("#navYourPosts").click(function(){
+      $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi?offset=" + offset +"0&limit=" + limit +"", function(data) {
+        $("#contentMostRecentInner").html("");
+        $("#contentBandLooksInner").html("");
+        $("#contentMusicianLooksInner").html("");
+        $("#yourPostsInner").html("");
+        for (var i = data.length - 1; i >= 0; i--) {
+          if (data[i].uporabnik.idUporabnik != getCookie("id")) {
+            continue;
+          }
+          var entryType = "Band looking for...";
+          if (!data[i].ogBand) {
+            entryType = "Musician looking for...";
+          }
+          $("#yourPostsInner").append("<div class=\"panel panel-default entry\" id=\"entry" + data[i].idOglas +"\">\
+          <div class=\"panel-heading\">\
+            <h4 class=\"panel-title\">\
+              <div data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + data[i].idOglas + "\">\
+                <div id=\"entryTitle\">" + data[i].ogNaslov +"</div>\
+                <br>\
+                <table class=\"table entryTable\">\
+                  <tbody>\
+                    <tr>\
+                      <td class=\"entryType\">" + entryType + "</td>\
+                      <td class=\"entryInstrument\">" + data[i].vloga.vlNaziv + "</td>\
+                      <td class=\"entryGenre\">" + data[i].zvrst.zvNaziv + "</td>\
+                      <td class=\"entryDate\">" + data[i].ogObjavljen + "</td>\
+                    </tr>\
+                  </tbody>\
+                </table>\
+              </div>\
+            </h4>\
+          </div>\
+          <div id=\"collapse" + data[i].idOglas + "\" class=\"panel-collapse collapse\">\
+            <div class=\"panel-body\">\
+              <p class=\"entryText\">" + data[i].ogOpis + "</p>\
+              <button type=\"button\" id=\"editPost\" class=\"btn btn-primary\" onclick=\"editPost(" + data[i].idOglas + ")\">Edit post</button>\
+              <button type=\"button\" id=\"deletePost\" class=\"btn btn-defoult\" onclick=\"deletePost(" + data[i].idOglas + ")\">Delete post</button>\
+            </div>\
+          </div>\
+        </div>");
+        }
+      })
+    })
+    /*SEARCH USERS*/
+    $("#navSearchUsers").click(function(){
+      //FILL FORM
+      $("#searchInstruments").html(""); //DODAJ STATIČNE
+      $("#searchLocation").html("");
+      $('#searchInstruments').append($('<option>', { 
+        value: -1,
+        text : "Filter: Instrument"
+      }));
+      $('#searchLocation').append($('<option>', { 
+        value: -1,
+        text : "Filter: Location"
+      }));
+      //Instruments
+      $.getJSON("http://localhost:8080/apligs-rest/v1/vloge", function(data) {
+        $.each(data, function(i, instrument) {
+          $('#searchInstruments').append($('<option>', { 
+              value: instrument.idVloga,
+              text : instrument.vlNaziv 
+          }));
+        });
+      });
+      //Location
+      $.getJSON("http://localhost:8080/apligs-rest/v1/lokacije", function(data) {
+        $.each(data, function(i, location) {
+          $('#searchLocation').append($('<option>', { 
+              value: location.postnaStevilka,
+              text : location.loNaziv 
+          }));
+        });
+      });
+    })
+    $("#searchUsersForm").submit(function(event){
+      event.preventDefault();
+      offset = 0;
+      limit = 666;
+      $("#searchResults").html("");
+      var $form = $( this ),
+        email = $form.find( "input[name='searchEmail']" ).val(),
+        postnaStevilka = $form.find( "select[id='searchLocation']" ).find(":selected").val(),
+        vloga = $form.find("select[id='searchInstruments']").find(":selected").val();
+      $.getJSON("http://localhost:8080/apligs-rest/v1/uporabniki?offset=" + offset +"0&limit=" + limit +"", function(data) {
+        for (var i = data.length - 1; i >= 0; i--) {
+          if (data[i].upEmail == email || data[i].lokacija.postnaStevilka == postnaStevilka || data[i].vloga.idVloga == vloga) {
+            $("#searchResults").append("<div class=\"panel panel-default\">\
+                                        <div class=\"panel-body\">\
+                                          <div class=\"col-md-12 resultsName\">\
+                                            "+ data[i].upIme + " " + data[i].upPriimek + " (" +data[i].upEmail + ")"+"\
+                                          </div>\
+                                          <div class=\"col-md-3 column resultsInstrument\">\
+                                            " + data[i].vloga.vlNaziv + "\
+                                          </div> \
+                                          <div class=\"col-md-3 column resultsLocation\">\
+                                            " + data[i].lokacija.loNaziv + "\
+                                          </div>\
+                                          <div class=\"col-md-2 col-md-offset-4 column\">\
+                                            <button type=\"submit\" class=\"btn btn-primary btn-block resultsContactUser\"><span class=\"glyphicon glyphicon-envelope\"></span></button>\
+                                          </div>\
+                                        </div>\
+                                      </div>")
+          }
+        }
+      })
+
+    })
+
+    $(window).scroll(function () {
+      if ($("#navMostRecent").parents().hasClass("active") || $("#navMusicianLooks").parents().hasClass("active") || $("#navBandLooks").parents().hasClass("active") || $("#navYourPosts").parents().hasClass("active")){
+        if ($(window).scrollTop() + $(window).height() >= $('.content').offset().top + $('.content').height() ) { 
+          $('.content').height($('.content').height()+100);
+        }         
+      }
+    });
+
   </script>
 
 </body>

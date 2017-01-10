@@ -67,8 +67,6 @@
                                     <select class="form-control" id="location">
                                         <option disabled selected></option>
                                         <option disabled selected>Location</option>
-                                        <option value="loc1">loc1</option>
-                                        <option value="loc2">loc2</option>
                                   </select>
                                 </div>
                                 <label>Musical expertise</label></br>
@@ -76,27 +74,11 @@
                                   <select class="form-control" id="instruments">
                                     <option disabled selected></option>
                                     <option disabled selected>Instrument</option>
-                                    <option>Guitar</option>
-                                    <option>Bass guitar</option>
-                                    <option>Drums</option>
-                                    <option>Vocals</option>
-                                    <option>Banjo</option>
                                   </select>
                                 </div>
-                                <div class="form-group" id="genreFormGroup">
-                                  <select class="form-control" id="genre">
-                                    <option disabled selected></option>
-                                    <option disabled selected>Genre</option>
-                                    <option>Rock/metal</option>
-                                    <option>Country</option>
-                                    <option>Pop</option>
-                                    <option>Rap</option>
-                                    <option>Jazz</option>
-                                  </select>
-                                </div>
-
                               <input type="submit" class="btn btn-primary btn-block" value="Register">                            
                           </form>
+                          <p id="registerErrorMsg" class="text-danger"></p>
                           </div>
                       </div>
                   </div>
@@ -112,106 +94,71 @@
     <script src="js/bootstrap.min.js"></script>
     <script>
 
+    $( document ).ready(function() {
+      //FILL REGISTER FORM
+      //Instruments
+      $.getJSON("http://localhost:8080/apligs-rest/v1/vloge", function(data) {
+        $.each(data, function(i, instrument) {
+          $('#instruments').append($('<option>', { 
+              value: instrument.idVloga,
+              text : instrument.vlNaziv 
+          }));
+        });
+      });
+      //Locations
+      $.getJSON("http://localhost:8080/apligs-rest/v1/lokacije", function(data) {
+        $.each(data, function(i, location) {
+          $('#location').append($('<option>', { 
+              value: location.postnaStevilka,
+              text : location.loNaziv 
+          }));
+        });
+      });
+    }); 
+
+    /*LOGIN ATTEMPT*/
     $("#loginForm").submit(function(event){
       event.preventDefault();
       var $form = $( this ),
         email = $form.find( "input[name='email']" ).val(),
-        password = $form.find( "input[name='password']" ).val();
-        if (password=="test") {
-          var dateNow = new Date();
-          dateNow.setHours(dateNow.getHours() + 1);
-          document.cookie = "username="+email+";expires="+dateNow
-          document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
-          window.location = 'home.html';
-          $("#loginErrorMsg").text("");
-          return false;        
-        }else{
-          $("#loginErrorMsg").text("Invalid username or password");
-        }  
-        /*   $.get("http://88.200.98.85:8080/apligs/v1/users/login?email=mj0073@student.uni-lj.si&password=mitja", function(json){
-          alert(json);
-        });*/
+        password = $form.find( "input[name='password']" ).val(); //http://localhost:8080/apligs-rest/v1/uporabniki/prijava?email=mj0073@student.uni-lj.si&password=test
+        $.getJSON("http://localhost:8080/apligs-rest/v1/uporabniki/prijava?email="+email+"&password="+password , function(data) {
+          if (data == null) {
+            $("#loginErrorMsg").text("Invalid username or password");
+          }else{
+            var dateNow = new Date();
+            dateNow.setHours(dateNow.getHours() + 1);
+            document.cookie = "username="+email+";expires="+dateNow
+            document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
+            document.cookie = "username="+email+";expires="+dateNow+"; path=./editUser.html";
+            document.cookie = "username="+email+";expires="+dateNow+"; path=./editPost.html";
 
-    /*  $.ajax({
-        url: "http://88.200.98.85:8080/apligs/v1/users/login?email=mj0073@student.uni-lj.si&password=mitja",
-        dataType: "jsonp",
-        success: function(data){
-          alert("tukaj");
-        },
-        error: function(jqXHR, exception, data){
-        var msg = '';
-        if (jqXHR.status === 0) {
-            msg = 'Not connect.\n Verify Network.';
-        } else if (jqXHR.status == 404) {
-            msg = 'Requested page not found. [404]';
-        } else if (jqXHR.status == 500) {
-            msg = 'Internal Server Error [500].';
-        } else if (exception === 'parsererror') {
-            msg = 'Requested JSON parse failed.';
-        } else if (exception === 'timeout') {
-            msg = 'Time out error.';
-        } else if (exception === 'abort') {
-            msg = 'Ajax request aborted.';
-        } else {
-            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-        }
-        alert(msg);
-        }
-      });
-    /*  $.ajax({
-           url:"http://88.200.98.85:8080/apligs/v1/users/login?email=mj0073@student.uni-lj.si&password=mitja",//http://88.200.98.85:8080/apligs/v1/users/login?email="+email+"&password="+password,
-           dataType: 'jsonp', // Notice! JSONP <-- P (lowercase)
-           success: function(json){
-               // do stuff with json (in this case an array)
-               alert("Success");
-           },
-           error:function(xhr, textStatus, errorThrown){
-               alert(xhr);
-           }      
-        });
-       /* $.ajax({
-          url:"http://88.200.98.85:8080/apligs/v1/users/login?email="+email+"&password="+password,
-          .done(function(json){
-            alert("json");
-            if (data != "false") {
-              var dateNow = new Date();
-              dateNow.setHours(dateNow.getHours() + 1);
-              document.cookie = "username="+email+";expires="+dateNow
-              document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
-              window.location = 'home.html';
-              $("#loginErrorMsg").text("");
-              return false;        
-            }else{
-              $("#loginErrorMsg").text("Invalid username or password");
-            }    
-          },
-          dataType: 'jsonp'
-        });
-     /* $.ajax(url:"http://88.200.98.85:8080/apligs/v1/users/login?email="+email+"&password="+password, dataType: "jsonp", success:function(json){
-            alert(data);
-            if (data != "false") {
-              var dateNow = new Date();
-              dateNow.setHours(dateNow.getHours() + 1);
-              document.cookie = "username="+email+";expires="+dateNow
-              document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
-              window.location = 'home.html';
-              $("#loginErrorMsg").text("");
-              return false;        
-            }else{
-              $("#loginErrorMsg").text("Invalid username or password");
-            }    
-      });*/
-});
+            document.cookie = "id="+data.idUporabnik+";expires="+dateNow
+            document.cookie = "id="+data.idUporabnik+";expires="+dateNow+"; path=./home.html";
+            document.cookie = "id="+data.idUporabnik+";expires="+dateNow+"; path=./editUser.html";
+            document.cookie = "id="+data.idUporabnik+";expires="+dateNow+"; path=./editPost.html";
+
+            window.location = 'home.html';
+            $("#loginErrorMsg").text("");
+            return false;
+          }
+        });      
+    });
+    /*REGISTER ATTEMPT*/
     $("#registerForm").submit(function(event){
       event.preventDefault();
+      var date = new Date();
       var $form = $( this ),
         email = $form.find( "input[name='email']" ).val(),
         password = $form.find( "input[name='password']" ).val(),
         firstName = $form.find( "input[name='firstName']" ).val(),
         lastName = $form.find( "input[name='lastName']" ).val(),
-        loc = $form.find( "select[id='location']" ).find(":selected").val(),
-        instruments = $form.find("select[id='instruments'] option:selected").map(function(){ return this.value }).get().join(", ");
-
+        dateFormated = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate(),
+        picture = "./assets/users/usr1.jpg",
+        loc = $form.find( "select[id='location']" ).find(":selected").text(),
+        locId = $form.find( "select[id='location']" ).find(":selected").val(),
+        instrument = $form.find("select[id='instruments']").find(":selected").text(),
+        instrumentId = $form.find("select[id='instruments']").find(":selected").val();
       var error = false;
       if (password.length < 6) {
         $("#passwordFormGroup").addClass("has-error");
@@ -243,19 +190,61 @@
       }else{
         $("#locationFormGroup").removeClass("has-error");
       }
-      if (instruments.length == 0) {
+      if (instrument.length == 0) {
         $("#instrumentsFormGroup").addClass("has-error");
         error=true;
       }else{
         $("#instrumentsFormGroup").removeClass("has-error");
       }
       if (!error) {
-        var dateNow = new Date();
-        dateNow.setHours(dateNow.getHours() + 1);
-        document.cookie = "username="+email+";expires="+dateNow;
-        document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
-        document.cookie = "username="+email+";expires="+dateNow+"; path=./editUser.html";
-        window.location = 'home.html';        
+        var lokacija = new Object();
+        lokacija.postnaStevilka = locId;
+        lokacija.loNaziv = loc;
+        var vloga = new Object();
+        vloga.idVloga = instrumentId;
+        vloga.vlNaziv = instrument;
+        var user = new Object();
+        user.upEmail = email;
+        user.upGeslo = password;
+        user.upIme = firstName;
+        user.upPriimek = lastName;
+        user.upUstvarjen = dateFormated;
+        user.upPicture = picture;
+        user.lokacija = lokacija;
+        user.vloga = vloga;
+        var userData = JSON.stringify(user);
+
+        $.ajax({
+          type: "POST",
+          crossDomain: true,
+          beforeSend: function(request) {
+            request.setRequestHeader("Content-Type", "application/json"); 
+          },
+          url: "http://localhost:8080/apligs-rest/v1/uporabniki",
+          data: userData,
+          dataType: "text"
+        }) 
+        .done(function(msg) {
+          //Get given ID
+          $.getJSON("http://localhost:8080/apligs-rest/v1/uporabniki/prijava?email="+email+"&password="+password , function(data) {
+            if (data == null) {
+              $("#registerErrorMsg").text("Registration error.");
+            }else{
+              var dateNow = new Date();
+              dateNow.setHours(dateNow.getHours() + 1);
+              document.cookie = "username="+email+";expires="+dateNow
+              document.cookie = "username="+email+";expires="+dateNow+"; path=./home.html";
+              document.cookie = "username="+email+";expires="+dateNow+"; path=./editUser.html";
+
+              document.cookie = "id="+data.idUporabnik+";expires="+dateNow
+              document.cookie = "id="+data.idUporabnik+";expires="+dateNow+"; path=./home.html";
+              document.cookie = "id="+data.idUporabnik+";expires="+dateNow+"; path=./editUser.html";
+              window.location = 'home.html';
+              $("#registerErrorMsg").text("");
+              return false;
+            }            
+          })
+        })  
       }
     });
 

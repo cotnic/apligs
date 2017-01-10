@@ -25,7 +25,7 @@
 <body>
     <div class="row">
         <div class="col-sm-4 col-sm-offset-4 well" style="text-align: center; margin-top: 50px">
-          <form id="registerForm" method="post">      
+          <form id="editUserForm" method="post">      
               <label>Login information</label>
               <div id="passwordFormGroup">
                 <input id="password" name="password" type="password" class="form-control" placeholder="New password">
@@ -43,38 +43,22 @@
               </div>
               <div class="form-group" id="locationFormGroup">
                   <select class="form-control" id="location">
-                      <option disabled selected></option>
-                      <option disabled selected>Location</option>
-                      <option value="loc1">loc1</option>
-                      <option value="loc2">loc2</option>
+                      <option disabled selected value="-1"></option>
+                      <option disabled selected value="-1">Location</option>
                 </select>
               </div>
               <label>Musical expertise</label></br>
               <div class="form-group" id="instrumentsFormGroup">
                 <select class="form-control" id="instruments">
-                  <option disabled selected></option>
-                  <option disabled selected>Instrument</option>
-                  <option>Guitar</option>
-                  <option>Bass guitar</option>
-                  <option>Drums</option>
-                  <option>Vocals</option>
-                  <option>Banjo</option>
-                </select>
-              </div>
-              <div class="form-group" id="genreFormGroup">
-                <select class="form-control" id="genre">
-                  <option disabled selected></option>
-                  <option disabled selected>Genre</option>
-                  <option>Rock/metal</option>
-                  <option>Country</option>
-                  <option>Pop</option>
-                  <option>Rap</option>
-                  <option>Jazz</option>
+                  <option disabled selected value="-1"></option>
+                  <option disabled selected value="-1">Instrument</option>
                 </select>
               </div>
 
             <input class="btn btn-primary btn-block" id="saveButton" value="Save">  
-            <input class="btn btn-default btn-block" id="cancelButton" value="Cancel">                            
+            <input class="btn btn-default btn-block" id="cancelButton" value="Cancel">     
+            <br>
+            <input class="btn btn-default btn-block" id="deleteAccountButton" value="Delete your account">                           
         </form>
         <br>
         <div id="successful">
@@ -88,20 +72,37 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
     <script>
+      var editedUser;
       $( document ).ready(function() {
         var username=getCookie("username");
         if (username!="") {
+           //FILL FORM
+          //Instruments
+          $.getJSON("http://localhost:8080/apligs-rest/v1/vloge", function(data) {
+            $.each(data, function(i, instrument) {
+              $('#instruments').append($('<option>', { 
+                  value: instrument.idVloga,
+                  text : instrument.vlNaziv 
+              }));
+            });
+          });
+          //Locations
+          $.getJSON("http://localhost:8080/apligs-rest/v1/lokacije", function(data) {
+            $.each(data, function(i, location) {
+              $('#location').append($('<option>', { 
+                  value: location.postnaStevilka,
+                  text : location.loNaziv 
+              }));
+            });
+          });
           //Load info
-          $.getJSON("http://localhost:8080/apligs-rest/v1/uporabniki", function(data) {
-            for (var i = data.length - 1; i >= 0; i--) {
-              if (data[i].upEmail == username) {
-                alert(data[i].upIme);
-                $("#firstName").val(data[i].upIme);
-                $("#lastName").val(data[i].upPriimek);
-              }
-            }
-         });
-
+          $.getJSON("http://localhost:8080/apligs-rest/v1/uporabniki/"+getCookie("id"), function(data) {
+            editedUser = data;
+            $("#firstName").val(data.upIme);
+            $("#lastName").val(data.upPriimek);
+            $("#location").val(data.lokacija.postnaStevilka);
+            $("#instruments").val(data.vloga.idVloga);
+          });
         } else {
           window.location = 'index.html';
         }
@@ -109,19 +110,121 @@
       function returnHome(){
         window.location.href = 'home.html';
       }
+
       /*SAVE BUTTON*/
       $("#saveButton").click(function(){
-
-
-        $("#successful").append("<div class=\"alert alert-success\">\
-                                  <strong>Success!</strong> Information saved successfuly. Redirecting...\
-                                </div>");
-        window.setTimeout(returnHome, 2000);
+        var date = editedUser.upUstvarjen;
+        var email = editedUser.upEmail;
+        var picture = editedUser.upPicture;
+        var idUporabnik = editedUser.idUporabnik;
+        var $form = $( "#editUserForm" ),
+          passwordSecond = $form.find( "input[name='passwordSecond']" ).val(),
+          password = $form.find( "input[name='password']" ).val(),
+          firstName = $form.find( "input[name='firstName']" ).val(),
+          lastName = $form.find( "input[name='lastName']" ).val(),
+          loc = $form.find( "select[id='location']" ).find(":selected").text(),
+          locId = $form.find( "select[id='location']" ).find(":selected").val(),
+          instrument = $form.find("select[id='instruments']").find(":selected").text(),
+          instrumentId = $form.find("select[id='instruments']").find(":selected").val();
+        var error = false;
+        if (password.length < 6 || password != passwordSecond) {
+          $("#passwordFormGroup").addClass("has-error");
+          $("#passwordSecondFormGroup").addClass("has-error");
+          error=true;
+        }else{
+          $("#passwordFormGroup").removeClass("has-error");
+          $("#passwordSecondFormGroup").removeClass("has-error");
+        }
+        if (firstName.length == 0) {
+          $("#firstNameFormGroup").addClass("has-error");
+          error=true;
+        }else{
+          $("#firstNameFormGroup").removeClass("has-error");
+        }
+        if (lastName.length == 0) {
+          $("#lastNameFormGroup").addClass("has-error");
+          error=true;
+        }else{
+          $("#lastNameFormGroup").removeClass("has-error");
+        }
+        if (location == "-1") {
+          $("#locationFormGroup").addClass("has-error");
+          error=true;
+        }else{
+          $("#locationFormGroup").removeClass("has-error");
+        }
+        if (instrument == "-1") {
+          $("#instrumentsFormGroup").addClass("has-error");
+          error=true;
+        }else{
+          $("#instrumentsFormGroup").removeClass("has-error");
+        }
+        if (!error) {
+          var lokacija = new Object();
+          lokacija.postnaStevilka = locId;
+          lokacija.loNaziv = loc;
+          var vloga = new Object();
+          vloga.idVloga = instrumentId;
+          vloga.vlNaziv = instrument;
+          var user = new Object();
+          user.idUporabnik = idUporabnik;
+          user.upEmail = email;
+          user.upGeslo = password;
+          user.upIme = firstName;
+          user.upPriimek = lastName;
+          user.upUstvarjen = date;
+          user.upPicture = picture;
+          user.lokacija = lokacija;
+          user.vloga = vloga;
+          var userData = JSON.stringify(user);
+          $.ajax({
+            type: "PUT",
+            crossDomain: true,
+            beforeSend: function(request) {
+              request.setRequestHeader("Content-Type", "application/json"); 
+            },
+            url: "http://localhost:8080/apligs-rest/v1/uporabniki",
+            data: userData,
+            dataType: "text"
+          }) 
+          .done(function(msg) {
+          $("#successful").append("<div class=\"alert alert-success\">\
+                                     <strong>Success!</strong> Information saved successfuly. Redirecting...\
+                                   </div>");
+          window.setTimeout(returnHome, 2000);
+          })
+        }
+        
       });
 
       /*CANCEL BUTTON*/
       $("#cancelButton").click(function(event){
         window.location = 'home.html';
+      });
+
+      function toHomePage(){
+        document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+        document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+        window.location = 'index.html';
+      }
+
+      /*DELETE ACCOUNT BUTTON*/
+      $("#deleteAccountButton").click(function(){
+        if (confirm("Are you sure you want to delete your account? You can NOT undo this action!")){
+          $.ajax({
+            type: "DELETE",
+            crossDomain: true,
+            beforeSend: function(request) {
+              request.setRequestHeader("Content-Type", "application/json"); 
+            },
+            url: "http://localhost:8080/apligs-rest/v1/uporabniki/"+getCookie("id"),
+            dataType: "text"
+          }) 
+          .done(function(msg) {
+            $("#successful").append("<div class=\"alert alert-danger\"><strong>Account deleted!</strong> redericting to home page.</div>");
+            window.setTimeout(toHomePage, 2000);    
+          })  
+        }
       });
 
 

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>APLIGS - Edit your account</title>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/login.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4 well" style="text-align: center; margin-top: 50px">
+          <form class="newPostForm" method="post">
+            <div class="form-group" id="instrumentsFormGroup">
+              <select class="form-control" id="instruments">
+                <option disabled selected value="-1"></option>
+                <option disabled selected value="-1">The instrument you are look for</option>
+
+              </select>
+            </div>
+            <div class="form-group" id="genreFormGroup">
+              <select class="form-control" id="genre">
+                <option disabled selected value="-1"></option>
+                <option disabled selected value="-1">Your genre</option>
+
+              </select>
+            </div>
+            <div class="form-group" id="locationFormGroup">
+              <input id="location" name="location" type="text" class="form-control" disabled placeholder="Location">
+            </div>
+            <div class="form-group" id="titleFormGroup">
+              <input id="postTitle" name="postTitle" type="text" class="form-control" placeholder="Post title">
+            </div>
+            <br>
+            <div class="form-group" id="detailsFormGroup">
+              <textarea class="form-control" rows="5" id="postDetails" name="postDetails" placeholder="Post details"></textarea>
+            </div>
+            <input class="btn btn-primary btn-block" id="saveButton" value="Save">  
+            <input class="btn btn-default btn-block" id="cancelButton" value="Cancel">                            
+        </form>
+        <br>
+        <div id="successful">
+        </div>
+        </div>
+    </div>
+
+
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+      var editedPost;
+      $( document ).ready(function() {
+        var username=getCookie("username");
+        if (username!="") {
+          //Load info
+          $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi/"+getCookie("postId"), function(data) {
+            editedPost = data;
+            $("#postTitle").val(data.ogNaslov);
+            $("#postDetails").val(data.ogOpis);
+            $("#instruments").val(data.vloga.idVloga);
+            $("#genre").val(data.zvrst.idZvrst);
+          });
+          //FILL FORM
+          //Instruments
+          $.getJSON("http://localhost:8080/apligs-rest/v1/vloge", function(data) {
+            $.each(data, function(i, instrument) {
+              $('#instruments').append($('<option>', { 
+                  value: instrument.idVloga,
+                  text : instrument.vlNaziv 
+              }));
+            });
+          });
+          //Location
+          $.getJSON("http://localhost:8080/apligs-rest/v1/uporabniki/"+getCookie("id"), function(data) {
+            $("#location").val(data.lokacija.loNaziv);
+          });
+          //Genres
+          $.getJSON("http://localhost:8080/apligs-rest/v1/zvrsti", function(data) {
+            $.each(data, function(i, genre) {
+              $('#genre').append($('<option>', { 
+                  value: genre.idZvrst,
+                  text : genre.zvNaziv 
+              }));
+            });
+          });
+        } else {
+          window.location = 'index.html';
+        }
+      });  
+      function returnHome(){
+        window.location.href = 'home.html';
+      }
+      /*SAVE BUTTON*/
+      $("#saveButton").click(function(){
+        var date = new Date();
+        var ogBand = editedPost.ogBand;
+        var dodatek = "";
+        var $form = $( ".newPostForm" ),
+          ogNaslov = $form.find( "input[name='postTitle" + dodatek + "']" ).val(),
+          ogOpis = $form.find( "textarea[name='postDetails" + dodatek + "']" ).val(),
+          ogObjavljen = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate(),
+          ogPremium = editedPost.ogPremium,
+          idZvrst = $form.find("select[id='genre" + dodatek + "']").find(":selected").val(),
+          idVloga = $form.find("select[id='instruments" + dodatek + "']").find(":selected").val(),
+          idUporabnik = getCookie("id");
+        var error = false;
+        if (ogNaslov.length < 1) {
+          $("#titleFormGroup" + dodatek).addClass("has-error");
+          error=true;
+        }else{
+          $("#titleFormGroup" + dodatek).removeClass("has-error");
+        }
+        if (ogOpis.length < 1) {
+          $("#detailsFormGroup" + dodatek).addClass("has-error");
+          error=true;
+        }else{
+          $("#detailsFormGroup" + dodatek).removeClass("has-error");
+        }
+        if (idZvrst == "-1" || idZvrst == null) {
+          $("#genreFormGroup" + dodatek).addClass("has-error");
+          error=true;
+        }else{
+          $("#genreFormGroup" + dodatek).removeClass("has-error");
+        }
+        if (idVloga == "-1" || idVloga == null) {
+          $("#instrumentsFormGroup" + dodatek).addClass("has-error");
+          error=true;
+        }else{
+          $("#instrumentsFormGroup" + dodatek).removeClass("has-error");
+        }
+        if (!error) {
+          var zvrst = new Object();
+          zvrst.idZvrst = idZvrst;
+          var uporabnik = new Object();
+          uporabnik.idUporabnik = idUporabnik;
+          var vloga = new Object();
+          vloga.idVloga = idVloga;
+          var post = new Object();
+          post.idOglas = getCookie("postId")
+          post.ogNaslov = ogNaslov;
+          post.ogObjavljen = ogObjavljen;
+          post.ogOpis = ogOpis;
+          post.ogPremium = ogPremium;
+          post.ogBand = ogBand;
+          post.zvrst = zvrst;
+          post.uporabnik = uporabnik;
+          post.vloga = vloga;
+          var userData = JSON.stringify(post);
+          $.ajax({
+            type: "PUT",
+            crossDomain: true,
+            beforeSend: function(request) {
+              request.setRequestHeader("Content-Type", "application/json"); 
+            },
+            url: "http://localhost:8080/apligs-rest/v1/oglasi",
+            data: userData,
+            dataType: "text"
+          }) 
+          .done(function(msg) {
+            $("#successful").append("<div class=\"alert alert-success\">\
+                                      <strong>Success!</strong> Information saved successfuly. Redirecting...\
+                                    </div>");
+            window.setTimeout(returnHome, 2000);      
+         })  
+        }
+      });
+
+      /*CANCEL BUTTON*/
+      $("#cancelButton").click(function(event){
+        window.location = 'home.html';
+      });
+
+
+
+    </script>
+</body>
+
+</html>
