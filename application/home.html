@@ -46,7 +46,7 @@
           <li><a data-toggle="pill" href="#newPost" id="navNewPost">New post</a></li>
           <li><a data-toggle="pill" href="#yourPosts" id="navYourPosts">Your posts</a></li>
           <li><a data-toggle="pill" href="#searchUsers" id="navSearchUsers">Search users</a></li>
-          <li><a href="#" id="messagesB">Messages <span class="badge" id="unreadMessagesBadge">0/2</span></a></li>
+          <li><a data-toggle="pill" href="#messages" id="navMessages">Messages <span class="badge" id="unreadMessagesBadge">0/2</span></a></li>
           <li><a href="#" class="logoutButton">Log out</a></li>
         </ul><br>
       </div>
@@ -185,6 +185,29 @@
           <br>
           <div id="searchResults" >
           </div>         
+        </div>
+    </div>
+    <!-- MESSAGES -->
+    <div id="messages" class="contentPart tab-pane fade" >
+        <div class="tab-content" >  
+
+        <div  class="row " style="padding-left:45px; margin-bottom:10px">
+           <div class="btn-group">
+            <button type="button" class="btn btn-primary">Refresh</button>
+            <button type="button" class="btn btn-primary">New message</button>
+          </div>         
+        </div> 
+          <div class="col-sm-5">
+            <ul class="nav nav-pills nav-stacked" id="messageGroup">
+
+            </ul>
+          </div>  
+          <div class="col-sm-7">
+            <div class="form-group">
+              <textarea class="form-control" rows="20" id="chatBox" readonly></textarea>
+              <input type="text" class="form-control" id="chatBoxSend">
+            </div>
+          </div>  
         </div>
     </div>
   </div>
@@ -627,6 +650,78 @@
 
     })
 
+    function custom_sort(a, b) {
+    return new Date(b.spPoslano).getTime() - new Date(a.spPoslano).getTime();
+    }
+
+    /*MESSAGES*/
+    var poslanaSporocila;
+    var prejetaSporocila;
+    var sporocila;
+    var sporocilaUnikatnaEmail = [];
+    var sporocilaUnikatnaImena = [];
+    var sporocilaUnikatnaDatum = [];
+    var sporocilaUnikatnaUserId = [];
+    $("#navMessages").click(function(){
+      $('#chatBox').val("");
+      $("#messageGroup").html("");
+      $.getJSON("http://localhost:8080/apligs-rest/v1/sporocila/prejeto/"+getCookie("id"), function(data) {
+        prejetaSporocila = data;
+        console.log(data);
+      }).done(function(msg) {
+        $.getJSON("http://localhost:8080/apligs-rest/v1/sporocila/poslano/"+getCookie("id"), function(data) {
+          poslanaSporocila = data;
+          console.log(data);
+        }).done(function(msg){
+          sporocila = prejetaSporocila.concat(poslanaSporocila);
+          sporocila.sort(custom_sort);
+          console.log(sporocila);
+          var id = getCookie("id");
+          for (var i = 0; i < sporocila.length; i++) {
+            if ($.inArray(sporocila[i].uporabnik1.upEmail, sporocilaUnikatnaEmail)==-1 && sporocila[i].uporabnik1.idUporabnik != id) {
+              sporocilaUnikatnaEmail.push(sporocila[i].uporabnik1.upEmail);
+              sporocilaUnikatnaDatum.push(sporocila[i].spPoslano);
+              sporocilaUnikatnaImena.push(sporocila[i].uporabnik1.upIme + " " + sporocila[i].uporabnik1.upPriimek);
+              sporocilaUnikatnaUserId.push(sporocila[i].uporabnik1.idUporabnik);
+            }
+            if ($.inArray(sporocila[i].uporabnik2.upEmail, sporocilaUnikatnaEmail)==-1 && sporocila[i].uporabnik2.idUporabnik != id) {
+              sporocilaUnikatnaEmail.push(sporocila[i].uporabnik2.upEmail);
+              sporocilaUnikatnaDatum.push(sporocila[i].spPoslano);
+              sporocilaUnikatnaImena.push(sporocila[i].uporabnik2.upIme + " " + sporocila[i].uporabnik2.upPriimek);
+              sporocilaUnikatnaUserId.push(sporocila[i].uporabnik2.idUporabnik);
+            }
+          }
+          for (var i = 0; i < sporocilaUnikatnaEmail.length; i++) {
+            $("#messageGroup").append("\
+              <li class=\"messageGroupItem\" id=\"" + sporocilaUnikatnaUserId[i] + "\">\
+                <a data-toggle=\"pill\">\
+                  <div>Chat with: <strong>" + sporocilaUnikatnaImena[i] + "</strong> </div><div style=\"float: right;\"><small>" + sporocilaUnikatnaDatum[i] + "</small></div>\
+                  <div><small>" + sporocilaUnikatnaEmail[i] + "</small></div>\
+                </a>\
+              </li>");                 
+          }
+        })
+      })
+      $("#messageGroup").on("click", "li.messageGroupItem", function(event){
+        $('#chatBox').val("");
+        var currentId = $(this)[0].id;
+          for (var i =  0; i < sporocila.length; i++) {
+            if (sporocila[i].uporabnik1.idUporabnik == currentId || sporocila[i].uporabnik2.idUporabnik == currentId) {
+              $('#chatBox').val($('#chatBox').val()+sporocila[i].uporabnik2.upIme + " " + sporocila[i].uporabnik2.upPriimek + ":\n" +sporocila[i].spVsebina + "\n\n"); 
+            }
+          }
+      });
+
+      $('#chatBoxSend').bind("enterKey",function(e){
+         //SEND MESSAGE
+      });
+      $('#chatBoxSend').keyup(function(e){
+          if(e.keyCode == 13)
+          {
+              $(this).trigger("enterKey");
+          }
+      });
+    })
     $(window).scroll(function () {
       if ($("#navMostRecent").parents().hasClass("active") || $("#navMusicianLooks").parents().hasClass("active") || $("#navBandLooks").parents().hasClass("active") || $("#navYourPosts").parents().hasClass("active")){
         if ($(window).scrollTop() + $(window).height() >= $('.content').offset().top + $('.content').height() ) { 
