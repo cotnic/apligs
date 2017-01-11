@@ -202,6 +202,15 @@
       }else{
         $("#instrumentsFormGroup").removeClass("has-error");
       }
+      $.getJSON("http://localhost:8080/apligs-rest/v1/uporabniki", function(data) {
+        for (var i = data.length - 1; i >= 0; i--) {
+          if(data[i].upEmail == email){
+            alert("This email is already used.")
+            error = true;
+            break;
+          }  
+        }
+      });
       if (!error) {
         var lokacija = new Object();
         lokacija.postnaStevilka = locId;

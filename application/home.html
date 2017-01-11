@@ -53,6 +53,32 @@
       <div class="col-sm-6 well content tab-content">
       <!-- MOST RECENT POSTS -->
         <div id="contentMostRecent" class="tab-pane active fade in"  data-toggle="collapse" data-target="#contentPostDetails">
+          <input type="submit" class="btn btn-default btn-block" data-toggle="collapse" data-target="#filtersLatest" value="Add filters">  
+          <div id="filtersLatest" class="collapse">
+          <br>
+            <div class="form-group" id="instrumentsFilterFormGroup">
+              <select class="form-control" id="instrumentsFilterLatest">
+                <option disabled selected value="-1"></option>
+                <option  selected value="-1">Instrument</option>
+              </select>
+            </div>
+            <div class="form-group" id="genreFilterFormGroup">
+              <select class="form-control" id="genreFilterLatest">
+                <option disabled selected value="-1"></option>
+                <option  selected value="-1">Genre</option>
+
+              </select>
+            </div>
+            <div class="form-group" id="locationFilterFormGroup">
+              <select class="form-control" id="locationFilterLatest">
+                <option disabled selected value="-1"></option>
+                <option  selected value="-1">Location</option>
+              </select>
+            </div>
+            <input type="submit" class="btn btn-primary" data-toggle="collapse" id="applyFilterLatest" value="Add filters"> 
+            <input type="submit" class="btn btn-default" data-toggle="collapse" id="removeFilterLatest" value="Remove all filters">  
+          </div>
+          <br>
           <div class="panel-group " id="accordion contentMostRecentInner">
             <div id="contentMostRecentInner">
               
@@ -62,6 +88,32 @@
            
         <!-- BAND LOOKING FOR -->
         <div id="contentBandLooks" class="contentPart tab-pane fade">
+        <input type="submit" class="btn btn-default btn-block" data-toggle="collapse" data-target="#filtersBand" value="Add filters">  
+          <div id="filtersBand" class="collapse">
+          <br>
+            <div class="form-group" id="instrumentsFilterFormGroup">
+              <select class="form-control" id="instrumentsFilterBand">
+                <option disabled selected value="-1"></option>
+                <option  selected value="-1">Instrument</option>
+              </select>
+            </div>
+            <div class="form-group" id="genreFilterFormGroup">
+              <select class="form-control" id="genreFilterBand">
+                <option disabled selected value="-1"></option>
+                <option  selected value="-1">Genre</option>
+
+              </select>
+            </div>
+            <div class="form-group" id="locationFilterFormGroup">
+              <select class="form-control" id="locationFilterBand">
+                <option disabled selected value="-1"></option>
+                <option  selected value="-1">Location</option>
+              </select>
+            </div>
+            <input type="submit" class="btn btn-primary" data-toggle="collapse" id="applyFilterBand" value="Add filters"> 
+            <input type="submit" class="btn btn-default" data-toggle="collapse" id="removeFilterBand" value="Remove all filters">  
+          </div>
+          <br>
           <div class="panel-group" id="accordion1">
             <div id="contentBandLooksInner">
               
@@ -70,6 +122,32 @@
         </div>
         <!-- MUSICIAN LOOKING FOR -->
         <div id="contentMusicianLooks" class="contentPart tab-pane fade">
+          <input type="submit" class="btn btn-default btn-block" data-toggle="collapse" data-target="#filtersMusician" value="Add filters">  
+          <div id="filtersMusician" class="collapse">
+          <br>
+            <div class="form-group" id="instrumentsFilterFormGroup">
+              <select class="form-control" id="instrumentsFilterMusician">
+                <option disabled selected value="-1"></option>
+                <option  selected value="-1">Instrument</option>
+              </select>
+            </div>
+            <div class="form-group" id="genreFilterFormGroup">
+              <select class="form-control" id="genreFilterMusician">
+                <option disabled selected value="-1"></option>
+                <option  selected value="-1">Genre</option>
+
+              </select>
+            </div>
+            <div class="form-group" id="locationFilterFormGroup">
+              <select class="form-control" id="locationFilterMusician">
+                <option disabled selected value="-1"></option>
+                <option  selected value="-1">Location</option>
+              </select>
+            </div>
+            <input type="submit" class="btn btn-primary" data-toggle="collapse" id="applyFilterMusician" value="Add filters"> 
+            <input type="submit" class="btn btn-default" data-toggle="collapse" id="removeFilterMusician" value="Remove all filters">  
+          </div>
+          <br>
           <div class="panel-group" id="accordion">
             <div id="contentMusicianLooksInner">
               
@@ -236,7 +314,6 @@
         $("#contentMusicianLooksInner").html("");
         $("#yourPostsInner").html("");
         data.sort(custom_sort_posts);
-        console.log(data);
         for (var i = data.length - 1; i >= 0; i--) {
           var entryType = "Band looking for...";
           if (!data[i].ogBand) {
@@ -271,12 +348,69 @@
         }
       })
     }
+
+    function fillFIlters(){
+      //FILL FILTERS
+      //Instruments
+      $.getJSON("http://localhost:8080/apligs-rest/v1/vloge", function(data) {
+        $.each(data, function(i, instrument) {
+          $('#instrumentsFilterLatest').append($('<option>', { 
+              value: instrument.idVloga,
+              text : instrument.vlNaziv 
+          }));
+          $('#instrumentsFilterBand').append($('<option>', { 
+              value: instrument.idVloga,
+              text : instrument.vlNaziv 
+          }));
+          $('#instrumentsFilterMusician').append($('<option>', { 
+              value: instrument.idVloga,
+              text : instrument.vlNaziv 
+          }));
+        });
+      })
+      //Locations
+      $.getJSON("http://localhost:8080/apligs-rest/v1/lokacije", function(data) {
+        $.each(data, function(i, location) {
+          $('#locationFilterLatest').append($('<option>', { 
+              value: location.postnaStevilka,
+              text : location.loNaziv 
+          }));
+          $('#locationFilterBand').append($('<option>', { 
+              value: location.postnaStevilka,
+              text : location.loNaziv 
+          }));
+          $('#locationFilterMusician').append($('<option>', { 
+              value: location.postnaStevilka,
+              text : location.loNaziv 
+          }));
+        });
+      });
+      //Genres
+      $.getJSON("http://localhost:8080/apligs-rest/v1/zvrsti", function(data) {
+        $.each(data, function(i, location) {
+          $('#genreFilterLatest').append($('<option>', { 
+              value: location.idZvrst,
+              text : location.zvNaziv 
+          }));
+          $('#genreFilterBand').append($('<option>', { 
+              value: location.idZvrst,
+              text : location.zvNaziv 
+          }));
+          $('#genreFilterMusician').append($('<option>', { 
+              value: location.idZvrst,
+              text : location.zvNaziv 
+          }));
+        });
+      });
+    }
+
     /***************ON LOAD**********************/
     $( document ).ready(function() {
       $('[data-toggle="tooltip"]').tooltip(); 
       var username=getCookie("username");
       if (username!="") {
           $("#dropDownUsername").text(username);
+          fillFIlters();
           getLatestAdds();
           $('.content').height($('.content').height()+100);  
       } else {
@@ -301,6 +435,213 @@
       offset = 0;
       limit = 6666;
       getLatestAdds();
+    });
+    /*Filtered results*/
+    $("#applyFilterLatest").click(function(){
+      $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi", function(data) {
+        var filterGenre = $("#genreFilterLatest").val();
+        var filterInstrument = $("#instrumentsFilterLatest").val();
+        var filterLocation = $("#locationFilterLatest").val();
+        var f1 = false;
+        var f2 = false;
+        var f3 = false;
+        if (filterGenre == -1 || filterGenre == null ) {
+          f1 = true;
+        }
+        if (filterInstrument == -1 || filterInstrument == null ) {
+          f2 = true;
+        }
+        if (filterLocation == -1 || filterLocation == null ) {
+          f3 = true;
+        }   
+        $("#contentMostRecentInner").html("");
+        $("#contentBandLooksInner").html("");
+        $("#contentMusicianLooksInner").html("");
+        $("#yourPostsInner").html("");
+        data.sort(custom_sort_posts);
+        for (var i = data.length - 1; i >= 0; i--) {
+          if ((data[i].zvrst.idZvrst == filterGenre || f1) && (data[i].vloga.idVloga == filterInstrument || f2) && (data[i].uporabnik.lokacija.postnaStevilka == filterLocation || f3)) {
+          var entryType = "Band looking for...";
+          if (!data[i].ogBand) {
+            entryType = "Musician looking for...";
+          }
+          $("#contentMostRecentInner").append("<div class=\"panel panel-default entry\" id=\"entry" + data[i].idOglas +"\">\
+          <div class=\"panel-heading\">\
+            <h4 class=\"panel-title\">\
+              <div data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + data[i].idOglas + "\">\
+                <div id=\"entryTitle\">" + data[i].ogNaslov +"</div>\
+                <br>\
+                <table class=\"table entryTable\">\
+                  <tbody>\
+                    <tr>\
+                      <td class=\"entryType\">" + entryType + "</td>\
+                      <td class=\"entryInstrument\">" + data[i].vloga.vlNaziv + "</td>\
+                      <td class=\"entryGenre\">" + data[i].zvrst.zvNaziv + "</td>\
+                      <td class=\"entryDate\">" + data[i].ogObjavljen + "</td>\
+                    </tr>\
+                  </tbody>\
+                </table>\
+              </div>\
+            </h4>\
+          </div>\
+          <div id=\"collapse" + data[i].idOglas + "\" class=\"panel-collapse collapse\">\
+            <div class=\"panel-body\">\
+              <p class=\"entryText\">" + data[i].ogOpis + "</p>\
+              <button type=\"button\" class=\"btn btn-primary contactUserButton\" id=\"" + data[i].uporabnik.upEmail + "\" >Contact user</button>\
+            </div>\
+          </div>\
+        </div>");
+          }
+
+        }
+      })
+    })
+
+    $("#removeFilterLatest").click(function(){
+        $("#genreFilterLatest").val("0");
+        $("#instrumentsFilterLatest").val("0");
+        $("#locationFilterLatest").val("0");
+        $( "#navMostRecent" ).trigger( "click" );
+    });
+
+    /*Filtered results*/
+    $("#applyFilterBand").click(function(){
+      $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi", function(data) {
+        var filterGenre = $("#genreFilterBand").val();
+        var filterInstrument = $("#instrumentsFilterBand").val();
+        var filterLocation = $("#locationFilterBand").val();
+        var f1 = false;
+        var f2 = false;
+        var f3 = false;
+        if (filterGenre == -1 || filterGenre == null ) {
+          f1 = true;
+        }
+        if (filterInstrument == -1 || filterInstrument == null ) {
+          f2 = true;
+        }
+        if (filterLocation == -1 || filterLocation == null ) {
+          f3 = true;
+        }                  
+      $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi", function(data) {
+        $("#contentMusicianLooksInner").html("");
+        $("#contentBandLooksInner").html("");
+       $("#contentMostRecentInner").html("");
+       $("#yourPostsInner").html("");
+       data.sort(custom_sort_posts);
+        for (var i = data.length - 1; i >= 0; i--) {
+          if ((data[i].zvrst.idZvrst == filterGenre || f1) && (data[i].vloga.idVloga == filterInstrument || f2) && (data[i].uporabnik.lokacija.postnaStevilka == filterLocation || f3)) {
+          var entryType = "Band looking for...";
+          if (!data[i].ogBand) {
+            continue;
+          }
+          $("#contentBandLooksInner").append("<div class=\"panel panel-default entry\" id=\"entry" + data[i].idOglasi +"\">\
+          <div class=\"panel-heading\">\
+            <h4 class=\"panel-title\">\
+              <div data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + data[i].idOglas + "\">\
+                <div id=\"entryTitle\">" + data[i].ogNaslov +"</div>\
+                <br>\
+                <table class=\"table entryTable\">\
+                  <tbody>\
+                    <tr>\
+                      <td class=\"entryType\">" + entryType + "</td>\
+                      <td class=\"entryInstrument\">" + data[i].vloga.vlNaziv + "</td>\
+                      <td class=\"entryGenre\">" + data[i].zvrst.zvNaziv + "</td>\
+                      <td class=\"entryDate\">" + data[i].ogObjavljen + "</td>\
+                    </tr>\
+                  </tbody>\
+                </table>\
+              </div>\
+            </h4>\
+          </div>\
+          <div id=\"collapse" + data[i].idOglas + "\" class=\"panel-collapse collapse\">\
+            <div class=\"panel-body\">\
+              <p class=\"entryText\">" + data[i].ogOpis + "</p>\
+              <button type=\"button\" class=\"btn btn-primary contactUserButton\" id=\"" + data[i].uporabnik.upEmail + "\" >Contact user</button>\
+            </div>\
+          </div>\
+        </div>");
+        }
+
+
+        }
+              });
+      })
+    })
+
+    $("#removeFilterBand").click(function(){
+        $("#genreFilterBand").val("0");
+        $("#instrumentsFilterBand").val("0");
+        $("#locationFilterBand").val("0");
+        $( "#navBandLooks" ).trigger( "click" );
+    });
+
+    /*Filtered results*/
+    $("#applyFilterMusician").click(function(){
+      $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi", function(data) {
+        var filterGenre = $("#genreFilterMusician").val();
+        var filterInstrument = $("#instrumentsFilterMusician").val();
+        var filterLocation = $("#locationFilterMusician").val();
+        var f1 = false;
+        var f2 = false;
+        var f3 = false;
+        if (filterGenre == -1 || filterGenre == null ) {
+          f1 = true;
+        }
+        if (filterInstrument == -1 || filterInstrument == null ) {
+          f2 = true;
+        }
+        if (filterLocation == -1 || filterLocation == null ) {
+          f3 = true;
+        }                  
+      $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi", function(data) {
+        $("#contentMusicianLooksInner").html("");
+        $("#contentBandLooksInner").html("");
+       $("#contentMostRecentInner").html("");
+       $("#yourPostsInner").html("");
+       data.sort(custom_sort_posts);
+        for (var i = data.length - 1; i >= 0; i--) {
+          if ((data[i].zvrst.idZvrst == filterGenre || f1) && (data[i].vloga.idVloga == filterInstrument || f2) && (data[i].uporabnik.lokacija.postnaStevilka == filterLocation || f3)) {
+            var entryType = "Musican looking for...";
+            if (data[i].ogBand) {
+              continue;
+            }
+            $("#contentMusicianLooksInner").append("<div class=\"panel panel-default entry\" id=\"entry" + data[i].idOglas +"\">\
+            <div class=\"panel-heading\">\
+              <h4 class=\"panel-title\">\
+                <div data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse" + data[i].idOglas + "\">\
+                  <div id=\"entryTitle\">" + data[i].ogNaslov +"</div>\
+                  <br>\
+                  <table class=\"table entryTable\">\
+                    <tbody>\
+                      <tr>\
+                        <td class=\"entryType\">" + entryType + "</td>\
+                        <td class=\"entryInstrument\">" + data[i].vloga.vlNaziv + "</td>\
+                        <td class=\"entryGenre\">" + data[i].zvrst.zvNaziv + "</td>\
+                        <td class=\"entryDate\">" + data[i].ogObjavljen + "</td>\
+                      </tr>\
+                    </tbody>\
+                  </table>\
+                </div>\
+              </h4>\
+            </div>\
+            <div id=\"collapse" + data[i].idOglas + "\" class=\"panel-collapse collapse\">\
+              <div class=\"panel-body\">\
+                <p class=\"entryText\">" + data[i].ogOpis + "</p>\
+                <button type=\"button\" class=\"btn btn-primary contactUserButton\" id=\"" + data[i].uporabnik.upEmail + "\" >Contact user</button>\
+              </div>\
+            </div>\
+          </div>");
+          }
+        }
+        });
+      })
+    })
+
+    $("#removeFilterMusician").click(function(){
+        $("#genreFilterMusician").val("0");
+        $("#instrumentsFilterMusician").val("0");
+        $("#locationFilterMusician").val("0");
+        $( "#navMusicianLooks" ).trigger( "click" );
     });
 
     /*********************BAND LOOKING FOR...***************************/
@@ -638,14 +979,28 @@
       event.preventDefault();
       offset = 0;
       limit = 666;
+
       $("#searchResults").html("");
       var $form = $( this ),
         email = $form.find( "input[name='searchEmail']" ).val(),
         postnaStevilka = $form.find( "select[id='searchLocation']" ).find(":selected").val(),
         vloga = $form.find("select[id='searchInstruments']").find(":selected").val();
+
+        var f1 = false;
+        var f2 = false;
+        var f3 = false
+        if (email == "" || email == null ) {
+          f1 = true;
+        }
+        if (postnaStevilka == -1 || postnaStevilka == null ) {
+          f2 = true;
+        }
+        if (vloga == -1 || vloga == null ) {
+          f3 = true;
+        }
       $.getJSON("http://localhost:8080/apligs-rest/v1/uporabniki?offset=" + offset +"0&limit=" + limit +"", function(data) {
         for (var i = data.length - 1; i >= 0; i--) {
-          if (data[i].upEmail == email || data[i].lokacija.postnaStevilka == postnaStevilka || data[i].vloga.idVloga == vloga) {
+          if ((data[i].upEmail == email || f1) && (data[i].lokacija.postnaStevilka == postnaStevilka || f2) && (data[i].vloga.idVloga == vloga || f3)) {
             $("#searchResults").append("<div class=\"panel panel-default\">\
                                         <div class=\"panel-body\">\
                                           <div class=\"col-md-12 resultsName\">\
