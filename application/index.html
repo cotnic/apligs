@@ -165,8 +165,6 @@
         locId = $form.find( "select[id='location']" ).find(":selected").val(),
         instrument = $form.find("select[id='instruments']").find(":selected").text(),
         instrumentId = $form.find("select[id='instruments']").find(":selected").val();
-        alert(locId);
-        alert(instrumentId);
       var error = false;
       if (password.length < 6) {
         $("#passwordFormGroup").addClass("has-error");

@@ -223,7 +223,10 @@
           .done(function(msg) {
             $("#successful").append("<div class=\"alert alert-danger\"><strong>Account deleted!</strong> redericting to home page.</div>");
             window.setTimeout(toHomePage, 2000);    
-          })  
+          }) 
+          .fail(function(){
+            alert("Account can't be deleted. Write us an email.");
+          })
         }
       });
 
