@@ -104,7 +104,10 @@
               text : instrument.vlNaziv 
           }));
         });
-      });
+      })
+      .fail(function() {
+          alert( "Strežnik ni dostopen" );
+      }); 
       //Locations
       $.getJSON("http://localhost:8080/apligs-rest/v1/lokacije", function(data) {
         $.each(data, function(i, location) {
@@ -142,6 +145,9 @@
             $("#loginErrorMsg").text("");
             return false;
           }
+        })
+       .fail(function() {
+          alert( "Strežnik ni dostopen" );
         });      
     });
     /*REGISTER ATTEMPT*/
@@ -245,6 +251,9 @@
             }            
           })
         })  
+        .fail(function() {
+          alert( "Strežnik ni dostopen" );
+        })
       }
     });
 
