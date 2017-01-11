@@ -29,4 +29,12 @@ public interface OglasREST {
 	@DELETE
 	@Path("/{id}")
 	public Response izbrisiOglas(@PathParam("id") int id);
+
+	@OPTIONS
+	@Path("/")
+	public Response optionResponse1();
+	
+	@OPTIONS
+	@Path("/{id}")
+	public Response optionResponse2();
 }

@@ -84,4 +84,17 @@ public class SporociloVir implements SporociloREST{
 		return Response.ok("ok").header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	@Override
+	@OPTIONS
+	@Path("/")
+	public Response optionResponse1() {
+		return Response.ok("ok").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE").header("Access-Control-Allow-Headers", "Content-Type").build();
+	}
+	
+	@Override
+	@OPTIONS
+	@Path("/{id}")
+	public Response optionResponse2() {
+		return Response.ok("ok").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE").header("Access-Control-Allow-Headers", "Content-Type").build();
+	}
 }

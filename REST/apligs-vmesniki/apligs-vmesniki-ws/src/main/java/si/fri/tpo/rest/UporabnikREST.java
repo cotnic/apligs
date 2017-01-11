@@ -33,4 +33,12 @@ public interface UporabnikREST {
 	@DELETE
 	@Path("/{id}")
 	public Response izbrisiUporabnika(@PathParam("id") int id);
+
+	@OPTIONS
+	@Path("/")
+	public Response optionResponse1();
+	
+	@OPTIONS
+	@Path("/{id}")
+	public Response optionResponse2();
 }

@@ -11,6 +11,12 @@ import si.fri.prpo.zrna.vmesniki.UpravljalecUporabnikovSBLocal;
 import si.fri.tpo.model.Uporabnik;
 import si.fri.tpo.rest.UporabnikREST;
 
+/**
+ * Class for all RESTful methods done at URL: http://localhost:8080/apligs-rest/v1/uporabniki
+ * @author mkotnik
+ * @version 1.0
+ * 
+ */
 @Path("/uporabniki")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -77,4 +83,17 @@ public class UporabnikVir implements UporabnikREST {
 			return Response.status(204).header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	@Override
+	@OPTIONS
+	@Path("/")
+	public Response optionResponse1() {
+		return Response.ok("ok").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE").header("Access-Control-Allow-Headers", "Content-Type").build();
+	}
+	
+	@Override
+	@OPTIONS
+	@Path("/{id}")
+	public Response optionResponse2() {
+		return Response.ok("ok").header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE").header("Access-Control-Allow-Headers", "Content-Type").build();
+	}
 }

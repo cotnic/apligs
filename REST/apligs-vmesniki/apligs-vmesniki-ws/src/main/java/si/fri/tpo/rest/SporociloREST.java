@@ -37,4 +37,12 @@ public interface SporociloREST {
 	@DELETE
 	@Path("/{id}")
 	public Response izbrisiSporocilo(@PathParam("id") int id);
+
+	@OPTIONS
+	@Path("/")
+	public Response optionResponse1();
+	
+	@OPTIONS
+	@Path("/{id}")
+	public Response optionResponse2();
 }
