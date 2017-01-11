@@ -46,7 +46,7 @@
           <li><a data-toggle="pill" href="#newPost" id="navNewPost">New post</a></li>
           <li><a data-toggle="pill" href="#yourPosts" id="navYourPosts">Your posts</a></li>
           <li><a data-toggle="pill" href="#searchUsers" id="navSearchUsers">Search users</a></li>
-          <li><a data-toggle="pill" href="#messages" id="navMessages">Messages <span class="badge" id="unreadMessagesBadge">0/2</span></a></li>
+          <li><a data-toggle="pill" href="#messages" id="navMessages">Messages</a></li>
           <li><a href="#" class="logoutButton">Log out</a></li>
         </ul><br>
       </div>
@@ -90,7 +90,7 @@
               <div class="form-group" id="instrumentsFormGroup">
                 <select class="form-control" id="instruments">
                   <option disabled selected value="-1"></option>
-                  <option disabled selected value="-1">The instrument you are look for</option>
+                  <option disabled selected value="-1">The instrument you are looking for</option>
                 </select>
               </div>
               <div class="form-group" id="genreFormGroup">
@@ -100,7 +100,7 @@
                 </select>
               </div>
               <div class="form-group" id="locationFormGroup">
-                <input id="location" name="location" type="text" class="form-control" disabled placeholder="Location">
+                <input id="location" name="location" type="text" class="form-control" disabled placeholder="Location" data-toggle="tooltip" title="You can change the location in your account settings.">
               </div>
               <div class="form-group" id="titleFormGroup">
                 <input id="postTitle" name="postTitle" type="text" class="form-control" placeholder="Post title">
@@ -132,8 +132,8 @@
 
                   </select>
                 </div>
-                <div class="form-group" id="locationFormGroup2">
-                  <input id="location2" name="location2" type="text" class="form-control" disabled placeholder="Location">
+                <div class="form-group" id="locationFormGroup2" >
+                  <input id="location2" name="location2" type="text" class="form-control" disabled placeholder="Location" data-toggle="tooltip" title="You can change the location in your account settings.">
                 </div>
                 <div class="form-group" id="titleFormGroup2">
                   <input id="postTitle2" name="postTitle2" type="text" class="form-control" placeholder="Post title">
@@ -191,10 +191,10 @@
     <div id="messages" class="contentPart tab-pane fade" >
         <div class="tab-content" >  
 
-        <div  class="row " style="padding-left:45px; margin-bottom:10px">
+        <div class="row " style="padding-left:45px; margin-bottom:10px">
            <div class="btn-group">
-            <button type="button" class="btn btn-primary">Refresh</button>
-            <button type="button" class="btn btn-primary">New message</button>
+            <button type="button" class="btn btn-primary" id="messagesRefreshB">Refresh</button>
+            <button type="button" class="btn btn-primary" id="messagesNewMessage">New message</button>
           </div>         
         </div> 
           <div class="col-sm-5">
@@ -203,9 +203,16 @@
             </ul>
           </div>  
           <div class="col-sm-7">
-            <div class="form-group">
+            <div class="form-group" id="chat">
               <textarea class="form-control" rows="20" id="chatBox" readonly></textarea>
-              <input type="text" class="form-control" id="chatBoxSend">
+              <input type="text" class="form-control" id="newMessageTo" placeholder="Message to:"  style="display: none">
+              <br>
+              <input type="text" class="form-control" id="chatBoxSend" placeholder="Message">
+              <br>
+              <div class="btn-group" id="newMsgButtons" style="display: none; float: right;">
+                <button type="button" class="btn btn-primary" id="messageSend">Send</button>
+                <button type="button" class="btn btn-default" id="messageBack">Back</button>
+              </div> 
             </div>
           </div>  
         </div>
@@ -217,12 +224,19 @@
   <script>
     var offset = 0;
     var limit = 6666;
+    /*SORTS POSTS*/
+    function custom_sort_posts(a, b) {
+      return a.idOglas - b.idOglas;
+    }
+    /*FETCHES LATEST ADDS*/
     function getLatestAdds(){
       $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi?offset=" + offset +"0&limit=" + limit +"", function(data) {
         $("#contentMostRecentInner").html("");
         $("#contentBandLooksInner").html("");
         $("#contentMusicianLooksInner").html("");
         $("#yourPostsInner").html("");
+        data.sort(custom_sort_posts);
+        console.log(data);
         for (var i = data.length - 1; i >= 0; i--) {
           var entryType = "Band looking for...";
           if (!data[i].ogBand) {
@@ -250,15 +264,16 @@
           <div id=\"collapse" + data[i].idOglas + "\" class=\"panel-collapse collapse\">\
             <div class=\"panel-body\">\
               <p class=\"entryText\">" + data[i].ogOpis + "</p>\
-              <button type=\"button\" class=\"btn btn-primary\">Contact user</button>\
+              <button type=\"button\" class=\"btn btn-primary contactUserButton\" id=\"" + data[i].uporabnik.upEmail + "\" >Contact user</button>\
             </div>\
           </div>\
         </div>");
         }
       })
     }
-
+    /***************ON LOAD**********************/
     $( document ).ready(function() {
+      $('[data-toggle="tooltip"]').tooltip(); 
       var username=getCookie("username");
       if (username!="") {
           $("#dropDownUsername").text(username);
@@ -269,26 +284,26 @@
       }
     });   
 
-    /*LOGOUT BUTTON*/
+    /**********************LOGOUT BUTTON***********************/
     $(".logoutButton").click(function(){
         document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
         document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
         window.location = 'index.html';
     });
 
-    /*USER SETTING*/
+    /*********************USER SETTING***************/
     $(".userSetingsButton").click(function(){
       window.location = 'editUser.html';
     });
 
-    /*MOST RECENT POSTS*/
+    /*********************MOST RECENT POSTS*******************/
     $("#navMostRecent").click(function(){
       offset = 0;
       limit = 6666;
       getLatestAdds();
     });
 
-    /*BAND LOOKING FOR...*/
+    /*********************BAND LOOKING FOR...***************************/
     $("#navBandLooks").click(function(){
       offset = 0;
       limit = 6666;
@@ -296,6 +311,7 @@
         $("#contentBandLooksInner").html("");
        $("#contentMostRecentInner").html("");
        $("#yourPostsInner").html("");
+       data.sort(custom_sort_posts);
         for (var i = data.length - 1; i >= 0; i--) {
           var entryType = "Band looking for...";
           if (!data[i].ogBand) {
@@ -323,7 +339,7 @@
           <div id=\"collapse" + data[i].idOglas + "\" class=\"panel-collapse collapse\">\
             <div class=\"panel-body\">\
               <p class=\"entryText\">" + data[i].ogOpis + "</p>\
-              <button type=\"button\" class=\"btn btn-primary\">Contact user</button>\
+              <button type=\"button\" class=\"btn btn-primary contactUserButton\" id=\"" + data[i].uporabnik.upEmail + "\" >Contact user</button>\
             </div>\
           </div>\
         </div>");
@@ -331,14 +347,16 @@
       });
     });
 
-    /*MUSICIAN LOOKING FOR...*/
+    /************************MUSICIAN LOOKING FOR...*********************/
     $("#navMusicianLooks").click(function(){
       offset = 0;
       limit = 666;
+
       $.getJSON("http://localhost:8080/apligs-rest/v1/oglasi?offset=" + offset +"0&limit=" + limit +"", function(data) {
         $("#contentMusicianLooksInner").html("");
         $("#contentMostRecentInner").html("");
         $("#yourPostsInner").html("");
+        data.sort(custom_sort_posts);
         for (var i = data.length - 1; i >= 0; i--) {
           var entryType = "Musican looking for...";
           if (data[i].ogBand) {
@@ -366,7 +384,7 @@
           <div id=\"collapse" + data[i].idOglas + "\" class=\"panel-collapse collapse\">\
             <div class=\"panel-body\">\
               <p class=\"entryText\">" + data[i].ogOpis + "</p>\
-              <button type=\"button\" class=\"btn btn-primary\">Contact user</button>\
+              <button type=\"button\" class=\"btn btn-primary contactUserButton\" id=\"" + data[i].uporabnik.upEmail + "\" >Contact user</button>\
             </div>\
           </div>\
         </div>");
@@ -374,7 +392,7 @@
       });
     });
 
-    /*NEW POST*/
+    /*********************NEW POST********************************/
     $("#navNewPost").click(function(event){
       $("#instruments").html(""); 
       $("#instruments2").html("");
@@ -515,7 +533,7 @@
       window.location.href = 'home.html'; 
     }
 
-    /*YOUR POSTS*/
+    /************************YOUR POSTS***************************/
     function editPost(postID){
       var dateNow = new Date();
       dateNow.setHours(dateNow.getHours() + 1);
@@ -584,7 +602,7 @@
         }
       })
     })
-    /*SEARCH USERS*/
+    /***********************SEARCH USERS************************/
     $("#navSearchUsers").click(function(){
       //FILL FORM
       $("#searchInstruments").html(""); //DODAJ STATIČNE
@@ -640,21 +658,110 @@
                                             " + data[i].lokacija.loNaziv + "\
                                           </div>\
                                           <div class=\"col-md-2 col-md-offset-4 column\">\
-                                            <button type=\"submit\" class=\"btn btn-primary btn-block resultsContactUser\"><span class=\"glyphicon glyphicon-envelope\"></span></button>\
+                                          <button type=\"button\" class=\"btn btn-primary contactUserButton btn-block\" id=\"" + data[i].upEmail + "\" ><span class=\"glyphicon glyphicon-envelope\"></span></button>\
                                           </div>\
                                         </div>\
                                       </div>")
           }
         }
       })
-
     })
 
+    /*******************MESSAGES******************/
+    //SORT MESSAGES
     function custom_sort(a, b) {
-    return new Date(b.spPoslano).getTime() - new Date(a.spPoslano).getTime();
+      return a.idSporocila - b.idSporocila;
+    }
+    /*REFRESH MESSAGES*/
+    $("#messagesRefreshB").click(function(){
+      $("#messageBack").trigger("click");
+      $( "#navMessages" ).trigger( "click" );
+    })
+
+    /*NEW MESSAGE*/
+    $("#messagesNewMessage").click(function(){
+      $("#newMessageTo").css("display", "");
+      $("#chatBox").css("display", "none");
+      $("#newMsgButtons").css("display", "");
+    })
+    /*BACK BUTTON MESSAGES*/
+    $("#messageBack").click(function(){
+      $("#newMessageTo").val("");
+      $("#chatBoxSend").val("");
+      $("#newMessageTo").css("display", "none");
+      $("#chatBox").css("display", "");
+      $("#newMsgButtons").css("display", "none");
+    })
+    /*SEND NEW MESSAGE*/
+    $("#messageSend").click(function(){
+      var to = $("#newMessageTo").val();
+      var msg = $("#chatBoxSend").val();
+      //CHECK IF USER EXISTS
+      $.getJSON("http://localhost:8080/apligs-rest/v1/uporabniki", function(data) {
+        var userExists = false;
+        var idTo;
+        if (to == getCookie("username")) {
+          alert("Sporočila ne morete poslati sebi.");
+        }else{
+
+          for (var i = data.length - 1; i >= 0; i--) {   
+            if (data[i].upEmail == to) {
+              idTo = data[i].idUporabnik;
+              userExists = true;
+              break;
+            }
+          }
+          if (!userExists) {
+            alert("Uporabnik s tem email naslovom ne obstaja.");
+          }else{
+          //POŠLJANJE
+          var date = new Date();
+          var message = $("#chatBoxSend").val();
+          if (message.length > 0 ) {
+            var msg = new Object();
+            msg.spPoslano = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+            msg.spVsebina = message;
+            msg.spZadeva = "";
+            var uporabnik1 = new Object();
+            uporabnik1.idUporabnik = idTo;
+            var uporabnik2 = new Object();
+            uporabnik2.idUporabnik = getCookie("id");
+            msg.uporabnik1 = uporabnik1;
+            msg.uporabnik2 = uporabnik2;
+            var msgJSON = JSON.stringify(msg);
+            $.ajax({
+              type: "POST",
+              crossDomain: true,
+              beforeSend: function(request) {
+                request.setRequestHeader("Content-Type", "application/json"); 
+              },
+              url: "http://localhost:8080/apligs-rest/v1/sporocila/",
+              data: msgJSON,
+              dataType: "text"
+              }).done(function(msg) {
+                $("#messageBack").trigger("click");
+                $( "#navMessages" ).trigger( "click" );
+              })   
+            }  
+          }
+        }
+      })
+    });
+
+    //IZPIŠE VSEBINO POGOVORNE SKUPINE
+    function printMessages(){
+      $('#chatBox').val("");
+      $('#chatBoxSend').val("");
+      for (var i =  0; i < sporocila.length; i++) {
+        if (sporocila[i].uporabnik1.idUporabnik == currentId || sporocila[i].uporabnik2.idUporabnik == currentId) {
+          $('#chatBox').val($('#chatBox').val()+sporocila[i].uporabnik2.upIme + " " + sporocila[i].uporabnik2.upPriimek + ":\n" +sporocila[i].spVsebina + "\n\n"); 
+        }
+      }
+      var textarea = document.getElementById('chatBox');
+      textarea.scrollTop = textarea.scrollHeight;
     }
 
-    /*MESSAGES*/
+    var currentId = -1;
     var poslanaSporocila;
     var prejetaSporocila;
     var sporocila;
@@ -662,22 +769,31 @@
     var sporocilaUnikatnaImena = [];
     var sporocilaUnikatnaDatum = [];
     var sporocilaUnikatnaUserId = [];
+
+    //KLIK NA PRIKAZ SPOROČIL/SKUPIN SPOROČIL
     $("#navMessages").click(function(){
+     $("#messageBack").trigger("click");
+     currentId = -1;
+     poslanaSporocila = [];
+     prejetaSporocila = [];
+     sporocila = [];
+     sporocilaUnikatnaEmail = [];
+     sporocilaUnikatnaImena = [];
+     sporocilaUnikatnaDatum = [];
+     sporocilaUnikatnaUserId = [];      
       $('#chatBox').val("");
-      $("#messageGroup").html("");
+      $('#chatBoxSend').val("");
+      $("#messageGroup").empty();
       $.getJSON("http://localhost:8080/apligs-rest/v1/sporocila/prejeto/"+getCookie("id"), function(data) {
         prejetaSporocila = data;
-        console.log(data);
       }).done(function(msg) {
         $.getJSON("http://localhost:8080/apligs-rest/v1/sporocila/poslano/"+getCookie("id"), function(data) {
           poslanaSporocila = data;
-          console.log(data);
         }).done(function(msg){
           sporocila = prejetaSporocila.concat(poslanaSporocila);
           sporocila.sort(custom_sort);
-          console.log(sporocila);
           var id = getCookie("id");
-          for (var i = 0; i < sporocila.length; i++) {
+          for (var i = sporocila.length - 1; i >= 0; i--) {
             if ($.inArray(sporocila[i].uporabnik1.upEmail, sporocilaUnikatnaEmail)==-1 && sporocila[i].uporabnik1.idUporabnik != id) {
               sporocilaUnikatnaEmail.push(sporocila[i].uporabnik1.upEmail);
               sporocilaUnikatnaDatum.push(sporocila[i].spPoslano);
@@ -691,6 +807,7 @@
               sporocilaUnikatnaUserId.push(sporocila[i].uporabnik2.idUporabnik);
             }
           }
+          //IZPIŠE VSE SKUPINE POGOVOROV
           for (var i = 0; i < sporocilaUnikatnaEmail.length; i++) {
             $("#messageGroup").append("\
               <li class=\"messageGroupItem\" id=\"" + sporocilaUnikatnaUserId[i] + "\">\
@@ -702,26 +819,104 @@
           }
         })
       })
+    })
+      //KLIK NA SKUPINO
       $("#messageGroup").on("click", "li.messageGroupItem", function(event){
-        $('#chatBox').val("");
-        var currentId = $(this)[0].id;
-          for (var i =  0; i < sporocila.length; i++) {
-            if (sporocila[i].uporabnik1.idUporabnik == currentId || sporocila[i].uporabnik2.idUporabnik == currentId) {
-              $('#chatBox').val($('#chatBox').val()+sporocila[i].uporabnik2.upIme + " " + sporocila[i].uporabnik2.upPriimek + ":\n" +sporocila[i].spVsebina + "\n\n"); 
-            }
-          }
+        $("#messageBack").trigger("click");
+        currentId = $(this)[0].id;
+        //PRIKAŽI SPOROČILA
+        printMessages();
       });
 
-      $('#chatBoxSend').bind("enterKey",function(e){
-         //SEND MESSAGE
+      //GO TO SEND MESSAGE
+      $(document).on("click", "[class=\"btn btn-primary contactUserButton\"]", function(event){
+        var messageTo = $(this)[0].id;
+          $("#navMessages").trigger("click");
+          $("#messagesNewMessage").trigger("click");
+          $("#newMessageTo").val(messageTo);
       });
+      $(document).on("click", "[class=\"btn btn-primary contactUserButton btn-block\"]", function(event){
+        var messageTo = $(this)[0].id;
+          $("#navMessages").trigger("click");
+          $("#messagesNewMessage").trigger("click");
+          $("#newMessageTo").val(messageTo);
+      });
+
+      //SEND MESSAGE (OB KLIKU NA ENTER)
+      $('#chatBoxSend').bind("enterKey",function(e){
+        //POŠLJANJE
+        var date = new Date();
+        var message = $("#chatBoxSend").val();
+        if (message.length > 0 && currentId != -1) {
+          var msg = new Object();
+          msg.spPoslano = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
+          msg.spVsebina = message;
+          msg.spZadeva = "";
+          var uporabnik1 = new Object();
+          uporabnik1.idUporabnik = currentId;
+          var uporabnik2 = new Object();
+          uporabnik2.idUporabnik = getCookie("id");
+          msg.uporabnik1 = uporabnik1;
+          msg.uporabnik2 = uporabnik2;
+          var msgJSON = JSON.stringify(msg);
+          $.ajax({
+            type: "POST",
+            crossDomain: true,
+            beforeSend: function(request) {
+              request.setRequestHeader("Content-Type", "application/json"); 
+            },
+            url: "http://localhost:8080/apligs-rest/v1/sporocila/",
+            data: msgJSON,
+            dataType: "text"
+            }) 
+          .done(function(msg) {
+          //REFRESH MESSAGES
+           poslanaSporocila = [];
+           prejetaSporocila = [];
+           sporocila = [];
+           sporocilaUnikatnaEmail = [];
+           sporocilaUnikatnaImena = [];
+           sporocilaUnikatnaDatum = [];
+           sporocilaUnikatnaUserId = [];      
+            $('#chatBox').val("");
+            $.getJSON("http://localhost:8080/apligs-rest/v1/sporocila/prejeto/"+getCookie("id"), function(data) {
+              prejetaSporocila = data;
+            }).done(function(msg) {
+              $.getJSON("http://localhost:8080/apligs-rest/v1/sporocila/poslano/"+getCookie("id"), function(data) {
+                poslanaSporocila = data;
+              }).done(function(msg){
+                sporocila = prejetaSporocila.concat(poslanaSporocila);
+                sporocila.sort(custom_sort);
+                var id = getCookie("id");
+                for (var i = 0; i < sporocila.length; i++) {
+                  if ($.inArray(sporocila[i].uporabnik1.upEmail, sporocilaUnikatnaEmail)==-1 && sporocila[i].uporabnik1.idUporabnik != id) {
+                    sporocilaUnikatnaEmail.push(sporocila[i].uporabnik1.upEmail);
+                    sporocilaUnikatnaDatum.push(sporocila[i].spPoslano);
+                    sporocilaUnikatnaImena.push(sporocila[i].uporabnik1.upIme + " " + sporocila[i].uporabnik1.upPriimek);
+                    sporocilaUnikatnaUserId.push(sporocila[i].uporabnik1.idUporabnik);
+                  }
+                  if ($.inArray(sporocila[i].uporabnik2.upEmail, sporocilaUnikatnaEmail)==-1 && sporocila[i].uporabnik2.idUporabnik != id) {
+                    sporocilaUnikatnaEmail.push(sporocila[i].uporabnik2.upEmail);
+                    sporocilaUnikatnaDatum.push(sporocila[i].spPoslano);
+                    sporocilaUnikatnaImena.push(sporocila[i].uporabnik2.upIme + " " + sporocila[i].uporabnik2.upPriimek);
+                    sporocilaUnikatnaUserId.push(sporocila[i].uporabnik2.idUporabnik);
+                  }
+                }
+                printMessages();
+              })
+            })  
+          })
+        }  
+      });
+
       $('#chatBoxSend').keyup(function(e){
           if(e.keyCode == 13)
           {
               $(this).trigger("enterKey");
           }
       });
-    })
+
+    //POVEČEVANE STRANI
     $(window).scroll(function () {
       if ($("#navMostRecent").parents().hasClass("active") || $("#navMusicianLooks").parents().hasClass("active") || $("#navBandLooks").parents().hasClass("active") || $("#navYourPosts").parents().hasClass("active")){
         if ($(window).scrollTop() + $(window).height() >= $('.content').offset().top + $('.content').height() ) { 
